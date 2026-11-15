@@ -41,6 +41,8 @@ Cada una tiene una propuesta para arrancar la discusión. Al cerrarla, marcar la
 
 - [x] **Cómo se arma la interfaz.** Decidido: JavaFX por código Java, sin FXML ni Scene Builder. Cada pantalla es una clase que arma sus componentes y delega las operaciones en los servicios.
 - [ ] **Versión de Java y de JavaFX**, y cómo se agrega la librería al proyecto de NetBeans. Los dos tienen que tener lo mismo.
+  Decidido hasta ahora: línea 25 LTS, con JDK 25 y JavaFX 25.0.5.
+  Pendiente: cómo se agrega el SDK de JavaFX al proyecto y en qué ruta lo tiene cada uno.
 - [ ] **Nombres de los paquetes.** Propuesta: `modelo`, `servicios`, `persistencia`, `excepciones`, `ui`.
 - [ ] **Reparto de tareas.** Quién toma qué en cada etapa.
 - [ ] **Evidencias de verificación.** Propuesta: tabla de casos con capturas de pantalla.
