@@ -10,8 +10,8 @@ Cada una tiene una propuesta para arrancar la discusión. Al cerrarla, marcar la
 
 - [ ] **Dónde se guarda el archivo serializado.**
   Propuesta: `datos/cine.dat`, relativo a la carpeta del proyecto. Es fácil de mostrar en la defensa y de documentar. La alternativa es la carpeta del usuario (`user.home`), que no depende de desde dónde se ejecute pero queda escondida.
-- [ ] **Si `datos/` se sube al repo.**
-  Propuesta: no. Los datos de demostración los genera el programa en el primer inicio, así cualquiera arranca con el mismo estado.
+- [x] **Si el archivo de datos se sube al repo.**
+  Decidido: no. Los datos de demostración los genera el programa en el primer inicio, así todos arrancan con el mismo estado.
 - [ ] **Cuándo se guarda.**
   Propuesta: después de cada operación que cambia algo (alta, modificación, confirmación, cancelación). Guardar solo al cerrar pierde todo si el programa se cae.
 - [ ] **Qué pasa si falla el guardado.**
