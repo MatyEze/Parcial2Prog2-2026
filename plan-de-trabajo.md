@@ -34,7 +34,7 @@ Cada una tiene una propuesta para arrancar la discusión. Al cerrarla, marcar la
   - **Salas:** se pueden deshabilitar. Un cartel lista las funciones futuras afectadas, con la cantidad de reservas confirmadas de cada una (no el detalle de cada reserva), y advierte que las cancelaciones son irreversibles. Al confirmar, la sala no se puede usar para funciones nuevas, y sus funciones futuras y las reservas confirmadas de esas funciones pasan a canceladas. Se puede volver a habilitar, pero lo cancelado queda cancelado. La distribución de filas y butacas no se modifica.
   - **Funciones:** se pueden cancelar a mano, con el mismo cartel de advertencia y la misma cancelación en cascada de sus reservas. No se les cambia película, sala ni horario.
   - **Precio de una función:** se puede modificar. No afecta a las reservas ya creadas, solo a las futuras.
-- [ ] **Margen entre funciones.** Propuesta: ninguno; una función puede empezar cuando termina la anterior.
+- [x] **Margen entre funciones.** Decidido: 15 minutos fijos entre el fin de una función y el inicio de la siguiente en la misma sala. La hora de fin que se muestra sigue siendo inicio más duración; el margen solo se usa al validar superposiciones. Las funciones canceladas no cuentan. Hay que documentarlo en el informe.
 - [x] **Tipo de dato para el dinero.** Decidido: `double`. Es una simplificación consciente porque el importe es informativo; al mostrarlo se redondea a dos decimales. Va al informe.
 
 ### Proyecto y forma de trabajo
