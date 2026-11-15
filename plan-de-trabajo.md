@@ -39,7 +39,7 @@ Cada una tiene una propuesta para arrancar la discusión. Al cerrarla, marcar la
 
 ### Proyecto y forma de trabajo
 
-- [ ] **Cómo se arma la interfaz.** FXML con Scene Builder o JavaFX por código: usar la modalidad vista en clase.
+- [x] **Cómo se arma la interfaz.** Decidido: JavaFX por código Java, sin FXML ni Scene Builder. Cada pantalla es una clase que arma sus componentes y delega las operaciones en los servicios.
 - [ ] **Versión de Java y de JavaFX**, y cómo se agrega la librería al proyecto de NetBeans. Los dos tienen que tener lo mismo.
 - [ ] **Nombres de los paquetes.** Propuesta: `modelo`, `servicios`, `persistencia`, `excepciones`, `ui`.
 - [ ] **Reparto de tareas.** Quién toma qué en cada etapa.
