@@ -16,7 +16,7 @@ Cada una tiene una propuesta para arrancar la discusión. Al cerrarla, marcar la
 - [x] **Cuándo se guarda.**
   Decidido: después de cada operación que cambia algo (alta, modificación, confirmación, cancelación). Guardar solo al cerrar pierde todo si el programa se cae.
 - [x] **Qué pasa si falla el guardado.**
-  Decidido: avisar en pantalla, no mostrar éxito y deshacer el cambio en memoria, para que lo que se ve coincida con lo guardado. Los datos del formulario se conservan para reintentar.
+  Decidido: avisar en pantalla, no mostrar éxito y deshacer el cambio en memoria, para que lo que se ve coincida con lo guardado. Los datos del formulario se conservan para reintentar. Para deshacer no se revierte operación por operación: se descarta lo que hay en memoria y se vuelve a cargar el estado desde el archivo, que es el último estado bueno. Si esa relectura también falla, se avisa y se cierra.
 - [x] **Qué pasa si el archivo existe pero no se puede leer.**
   Decidido: avisar con la ruta del archivo y cerrar la aplicación, sin tocarlo. La consigna prohíbe sobrescribirlo automáticamente. Para volver a usar el programa hay que mover o borrar el archivo a mano.
 - [x] **Formato del CSV.**
