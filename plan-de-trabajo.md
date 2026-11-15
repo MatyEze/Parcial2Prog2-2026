@@ -58,7 +58,9 @@ El sistema como recorrido: tenemos una película, la programamos en una sala, se
 
 Cada etapa termina cuando se cumple su "Listo cuando". No se pasa a la siguiente antes.
 
-### Etapa 1 — Comprender el problema
+### Etapa 1 — Comprender el problema (completada)
+
+Resultado: `objetos-y-reglas.md`.
 
 - Distinguir película, sala, butaca, función, cliente, entrada y reserva.
 - Repasar las reglas de negocio, sin hablar de código.
