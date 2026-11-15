@@ -26,7 +26,7 @@ Cada una tiene una propuesta para arrancar la discusión. Al cerrarla, marcar la
 
 - [x] **Descuento de estudiante.** Decidido: 20 % fijo, el valor de los wireframes. Va como constante en la entrada de estudiante y hay que documentarlo en el informe.
 - [x] **Formato del código de reserva.** Decidido: `CIN-001`, secuencial, a partir de un contador guardado en el estado del cine. Los tres dígitos son relleno, no un tope: después de `CIN-999` sigue `CIN-1000`. Si una reserva se deshace por un fallo de guardado, el número se devuelve.
-- [ ] **Identificación del cliente.** Qué se acepta (¿solo dígitos?, ¿largo?) y qué pasa si la misma identificación llega con otro nombre. Propuesta: solo dígitos, y se reutiliza el cliente ya registrado.
+- [x] **Identificación del cliente.** Decidido: el cliente tiene nombre e identificación, los dos obligatorios. La identificación acepta solo dígitos, de 7 u 8 de largo. Si la misma identificación llega con otro nombre, se reutiliza el cliente ya registrado y se actualiza su nombre; las reservas anteriores pasan a mostrar el nombre nuevo.
 - [ ] **Desactivar una película con funciones futuras.** ¿Se permite? ¿Se puede reactivar? Propuesta: se permite, deja de ofrecerse para funciones nuevas y las ya programadas siguen.
 - [ ] **Editar la duración de una película con funciones programadas.** Propuesta: rechazar si el nuevo horario de fin se superpone con otra función.
 - [ ] **Salas y funciones: ¿se modifican o eliminan?** La consigna solo pide registrarlas. Propuesta: no se eliminan; de una función solo se puede cambiar el precio.
