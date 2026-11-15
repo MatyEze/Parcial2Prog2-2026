@@ -41,7 +41,14 @@ Cada una tiene una propuesta para arrancar la discusión. Al cerrarla, marcar la
 
 - [x] **Cómo se arma la interfaz.** Decidido: JavaFX por código Java, sin FXML ni Scene Builder. Cada pantalla es una clase que arma sus componentes y delega las operaciones en los servicios.
 - [x] **Versión de Java y de JavaFX**, y cómo se agrega la librería al proyecto de NetBeans. Decidido: línea 25 LTS, con JDK 25 y JavaFX 25.0.5. El SDK de JavaFX se descomprime en el disco C tal como viene, en `C:\javafx-sdk-25.0.5`, con la misma ruta en todas las máquinas porque queda escrita en el proyecto. Hay que documentarlo en las instrucciones de ejecución.
-- [ ] **Nombres de los paquetes.** Propuesta: `modelo`, `servicios`, `persistencia`, `excepciones`, `ui`.
+- [x] **Nombres de los paquetes.** Decidido: `cine` como raíz, con la clase principal, y un subpaquete por capa.
+  - `cine.modelo`: película, sala, butaca, función, cliente, reserva y entradas.
+  - `cine.servicios`: los casos de uso de películas, salas, funciones y reservas.
+  - `cine.persistencia`: repositorio genérico, estado del cine, lectura y escritura del archivo y exportador de CSV.
+  - `cine.excepciones`: la excepción de negocio y la de persistencia.
+  - `cine.ui`: las pantallas JavaFX.
+
+  La interfaz conoce a los servicios, los servicios al modelo y a la persistencia, y el modelo no conoce a nadie.
 - [ ] **Reparto de tareas.** Quién toma qué en cada etapa.
 - [ ] **Evidencias de verificación.** Propuesta: tabla de casos con capturas de pantalla.
 
