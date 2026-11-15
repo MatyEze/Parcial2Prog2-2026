@@ -50,7 +50,7 @@ Cada una tiene una propuesta para arrancar la discusión. Al cerrarla, marcar la
 
   La interfaz conoce a los servicios, los servicios al modelo y a la persistencia, y el modelo no conoce a nadie.
 - [x] **Reparto de tareas.** Decidido: no hay reparto; trabajamos siempre juntos, así los dos conocen todo el código. Una vez que esté todo armado, cualquiera de los dos puede hacer por su cuenta un ajuste chico, que entra por pull request para que el otro lo vea.
-- [ ] **Evidencias de verificación.** Propuesta: tabla de casos con capturas de pantalla.
+- [x] **Evidencias de verificación.** Decidido: tabla de casos con capturas de pantalla. Cada caso lleva los pasos, el resultado esperado, el obtenido y una captura. Cubre los diez casos mínimos de la consigna y se arma en la etapa 8.
 
 ## Ruta
 
