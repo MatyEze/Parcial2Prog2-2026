@@ -24,7 +24,7 @@ Cada una tiene una propuesta para arrancar la discusión. Al cerrarla, marcar la
 
 ### Reglas de negocio
 
-- [ ] **Descuento de estudiante.** Propuesta: 20 %, el valor de los wireframes.
+- [x] **Descuento de estudiante.** Decidido: 20 % fijo, el valor de los wireframes. Va como constante en la entrada de estudiante y hay que documentarlo en el informe.
 - [ ] **Formato del código de reserva.** Propuesta: `CIN-001`, secuencial.
 - [ ] **Identificación del cliente.** Qué se acepta (¿solo dígitos?, ¿largo?) y qué pasa si la misma identificación llega con otro nombre. Propuesta: solo dígitos, y se reutiliza el cliente ya registrado.
 - [ ] **Desactivar una película con funciones futuras.** ¿Se permite? ¿Se puede reactivar? Propuesta: se permite, deja de ofrecerse para funciones nuevas y las ya programadas siguen.
