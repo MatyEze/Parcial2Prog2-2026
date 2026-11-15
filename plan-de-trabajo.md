@@ -25,7 +25,7 @@ Cada una tiene una propuesta para arrancar la discusión. Al cerrarla, marcar la
 ### Reglas de negocio
 
 - [x] **Descuento de estudiante.** Decidido: 20 % fijo, el valor de los wireframes. Va como constante en la entrada de estudiante y hay que documentarlo en el informe.
-- [ ] **Formato del código de reserva.** Propuesta: `CIN-001`, secuencial.
+- [x] **Formato del código de reserva.** Decidido: `CIN-001`, secuencial, a partir de un contador guardado en el estado del cine. Los tres dígitos son relleno, no un tope: después de `CIN-999` sigue `CIN-1000`. Si una reserva se deshace por un fallo de guardado, el número se devuelve.
 - [ ] **Identificación del cliente.** Qué se acepta (¿solo dígitos?, ¿largo?) y qué pasa si la misma identificación llega con otro nombre. Propuesta: solo dígitos, y se reutiliza el cliente ya registrado.
 - [ ] **Desactivar una película con funciones futuras.** ¿Se permite? ¿Se puede reactivar? Propuesta: se permite, deja de ofrecerse para funciones nuevas y las ya programadas siguen.
 - [ ] **Editar la duración de una película con funciones programadas.** Propuesta: rechazar si el nuevo horario de fin se superpone con otra función.
