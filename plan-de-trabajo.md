@@ -30,7 +30,7 @@ Cada una tiene una propuesta para arrancar la discusión. Al cerrarla, marcar la
 - [ ] **Editar la duración de una película con funciones programadas.** Propuesta: rechazar si el nuevo horario de fin se superpone con otra función.
 - [ ] **Salas y funciones: ¿se modifican o eliminan?** La consigna solo pide registrarlas. Propuesta: no se eliminan; de una función solo se puede cambiar el precio.
 - [ ] **Margen entre funciones.** Propuesta: ninguno; una función puede empezar cuando termina la anterior.
-- [ ] **Tipo de dato para el dinero.** `double` (simple, es el del diagrama) o `BigDecimal` (exacto, más código).
+- [x] **Tipo de dato para el dinero.** Decidido: `double`. Es una simplificación consciente porque el importe es informativo; al mostrarlo se redondea a dos decimales. Va al informe.
 
 ### Proyecto y forma de trabajo
 
