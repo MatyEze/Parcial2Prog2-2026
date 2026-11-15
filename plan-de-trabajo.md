@@ -19,8 +19,8 @@ Cada una tiene una propuesta para arrancar la discusión. Al cerrarla, marcar la
   Decidido: avisar en pantalla, no mostrar éxito y deshacer el cambio en memoria, para que lo que se ve coincida con lo guardado. Los datos del formulario se conservan para reintentar.
 - [x] **Qué pasa si el archivo existe pero no se puede leer.**
   Decidido: avisar con la ruta del archivo y cerrar la aplicación, sin tocarlo. La consigna prohíbe sobrescribirlo automáticamente. Para volver a usar el programa hay que mover o borrar el archivo a mano.
-- [ ] **Formato del CSV.**
-  Propuesta: una fila por reserva, separador `;`, con código, estado, cliente, identificación, película, sala, fecha, hora, butacas e importe. El usuario elige dónde guardarlo con un diálogo.
+- [x] **Formato del CSV.**
+  Decidido: una fila por reserva, con encabezados y separador `;`. Columnas: código, estado, cliente, identificación, película, sala, fecha, hora, butacas (juntas en una celda) e importe total. Incluye las reservas canceladas. El usuario elige dónde guardarlo con un diálogo.
 
 ### Reglas de negocio
 
