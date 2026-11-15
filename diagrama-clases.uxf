@@ -1,47 +1,55 @@
-<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>40</x><y>20</y><w>440</w><h>200</h></coordinates><panel_attributes>PeliculaService
+<diagram program="umletino" version="15.1"><zoom_level>10</zoom_level><element><id>UMLClass</id><coordinates><x>40</x><y>60</y><w>440</w><h>210</h></coordinates><panel_attributes>PeliculaService
 --
--estado: EstadoCine
--persistencia: PersistenciaCine
+-gestor: GestorEstado
+-funcionService: FuncionService
 --
-+PeliculaService(estado, persistencia)
++PeliculaService(gestor, funcionService)
 +registrar(titulo: String, duracionMinutos: int): Pelicula
 +modificar(id: int, titulo: String, duracionMinutos: int): void
 +desactivar(id: int): void
++activar(id: int): void
 +listar(): List&lt;Pelicula&gt;
-+listarActivas(): List&lt;Pelicula&gt;</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>520</x><y>20</y><w>430</w><h>160</h></coordinates><panel_attributes>SalaService
++listarActivas(): List&lt;Pelicula&gt;</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>520</x><y>60</y><w>430</w><h>210</h></coordinates><panel_attributes>SalaService
 --
--estado: EstadoCine
--persistencia: PersistenciaCine
+-gestor: GestorEstado
+-funcionService: FuncionService
 --
-+SalaService(estado, persistencia)
++SalaService(gestor, funcionService)
 +registrar(nombre: String, filas: int, butacasPorFila: int): Sala
++deshabilitar(id: int): void
++habilitar(id: int): void
 +listar(): List&lt;Sala&gt;
--existeNombre(nombre: String): boolean</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>990</x><y>20</y><w>590</w><h>180</h></coordinates><panel_attributes>FuncionService
++listarHabilitadas(): List&lt;Sala&gt;
+-existeNombre(nombre: String): boolean</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>990</x><y>60</y><w>590</w><h>270</h></coordinates><panel_attributes>FuncionService
 --
--estado: EstadoCine
--persistencia: PersistenciaCine
+-gestor: GestorEstado
 --
-+FuncionService(estado, persistencia)
++FuncionService(gestor)
 +programar(idPelicula: int, idSala: int, inicio: LocalDateTime, precio: double): Funcion
++cambiarPrecio(id: int, precio: double): void
++cancelar(id: int): void
+~cancelarEnCascada(funcion: Funcion): void
++futurasVigentesDePelicula(idPelicula: int): List&lt;Funcion&gt;
++futurasVigentesDeSala(idSala: int): List&lt;Funcion&gt;
++cantidadReservasConfirmadas(funcion: Funcion): int
 +listar(): List&lt;Funcion&gt;
-+buscar(idPelicula: Integer, fecha: LocalDate): List&lt;Funcion&gt;
--validarSuperposicion(nueva: Funcion): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1620</x><y>20</y><w>480</w><h>250</h></coordinates><panel_attributes>ReservaService
++buscarEnCartelera(idPelicula: Integer, fecha: LocalDate): List&lt;Funcion&gt;
+-validarSuperposicion(nueva: Funcion): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1620</x><y>60</y><w>480</w><h>230</h></coordinates><panel_attributes>ReservaService
 --
--estado: EstadoCine
--persistencia: PersistenciaCine
+-gestor: GestorEstado
 -exportador: ExportadorReservas
 --
-+ReservaService(estado, persistencia, exportador)
++ReservaService(gestor, exportador)
 +butacasOcupadas(funcion: Funcion): Set&lt;Butaca&gt;
 +confirmar(funcion: Funcion, nombre: String, identificacion: String,
       tipos: Map&lt;Butaca, TipoEntrada&gt;): Reserva
 +cancelar(codigo: String): void
 +buscar(texto: String): List&lt;Reserva&gt;
 +listar(): List&lt;Reserva&gt;
-+exportarCsv(destino: Path): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>40</x><y>370</y><w>200</w><h>80</h></coordinates><panel_attributes>&lt;&lt;interface&gt;&gt;
++exportarCsv(destino: Path): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>40</x><y>430</y><w>200</w><h>80</h></coordinates><panel_attributes>&lt;&lt;interface&gt;&gt;
 Identificable&lt;K&gt;
 --
-+getId(): K</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>310</x><y>370</y><w>300</w><h>180</h></coordinates><panel_attributes>Repositorio&lt;K, T extends Identificable&lt;K&gt;&gt;
++getId(): K</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>310</x><y>430</y><w>300</w><h>180</h></coordinates><panel_attributes>Repositorio&lt;K, T extends Identificable&lt;K&gt;&gt;
 --
 -elementos: Map&lt;K, T&gt;
 --
@@ -50,7 +58,7 @@ Identificable&lt;K&gt;
 +buscar(id: K): T
 +existe(id: K): boolean
 +listar(): List&lt;T&gt;
-+cantidad(): int</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>700</x><y>370</y><w>340</w><h>390</h></coordinates><panel_attributes>EstadoCine
++cantidad(): int</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>700</x><y>430</y><w>340</w><h>390</h></coordinates><panel_attributes>EstadoCine
 --
 -peliculas: Repositorio&lt;Integer, Pelicula&gt;
 -salas: Repositorio&lt;Integer, Sala&gt;
@@ -71,23 +79,32 @@ Identificable&lt;K&gt;
 +siguienteIdPelicula(): int
 +siguienteIdSala(): int
 +siguienteIdFuncion(): int
-+siguienteCodigoReserva(): String</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1140</x><y>370</y><w>280</w><h>140</h></coordinates><panel_attributes>PersistenciaCine
++siguienteCodigoReserva(): String</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1140</x><y>430</y><w>300</w><h>180</h></coordinates><panel_attributes>GestorEstado
+--
+-estado: EstadoCine
+-persistencia: PersistenciaCine
+--
++GestorEstado(persistencia: PersistenciaCine)
++iniciar(): void
++getEstado(): EstadoCine
++guardarCambios(): void
+-recargar(): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1140</x><y>660</y><w>300</w><h>140</h></coordinates><panel_attributes>PersistenciaCine
 --
 -archivo: Path
 --
 +PersistenciaCine(archivo: Path)
 +existeArchivo(): boolean
 +cargar(): EstadoCine
-+guardar(estado: EstadoCine): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1140</x><y>550</y><w>280</w><h>60</h></coordinates><panel_attributes>DatosIniciales
---
-_+crearEstadoDemo(): EstadoCine_</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1620</x><y>370</y><w>400</w><h>80</h></coordinates><panel_attributes>ExportadorReservas
++guardar(estado: EstadoCine): void</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1620</x><y>430</y><w>400</w><h>80</h></coordinates><panel_attributes>ExportadorReservas
 --
 +exportarCsv(reservas: List&lt;Reserva&gt;, destino: Path): void
--aLineaCsv(reserva: Reserva): String</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1620</x><y>480</y><w>400</w><h>60</h></coordinates><panel_attributes>ReglaNegocioException
+-aLineaCsv(reserva: Reserva): String</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1620</x><y>540</y><w>400</w><h>60</h></coordinates><panel_attributes>DatosIniciales
 --
-+ReglaNegocioException(mensaje: String)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1620</x><y>560</y><w>400</w><h>60</h></coordinates><panel_attributes>PersistenciaException
+_+crearEstadoDemo(): EstadoCine_</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1620</x><y>620</y><w>400</w><h>60</h></coordinates><panel_attributes>ReglaNegocioException
 --
-+PersistenciaException(mensaje: String, causa: Throwable)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>40</x><y>850</y><w>350</w><h>290</h></coordinates><panel_attributes>Pelicula
++ReglaNegocioException(mensaje: String)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1620</x><y>700</y><w>400</w><h>60</h></coordinates><panel_attributes>PersistenciaException
+--
++PersistenciaException(mensaje: String, causa: Throwable)</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>40</x><y>910</y><w>350</w><h>320</h></coordinates><panel_attributes>Pelicula
 --
 -id: int
 -titulo: String
@@ -95,42 +112,54 @@ _+crearEstadoDemo(): EstadoCine_</panel_attributes><additional_attributes></addi
 -activa: boolean
 --
 +Pelicula(id, titulo, duracionMinutos)
-+modificar(titulo: String, duracionMinutos: int): void
++cambiarTitulo(titulo: String): void
++cambiarDuracion(duracionMinutos: int): void
 +desactivar(): void
++activar(): void
 +isActiva(): boolean
 +getId(): Integer
 +getTitulo(): String
 +getDuracionMinutos(): int
 +equals(o: Object): boolean
-+hashCode(): int</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>480</x><y>850</y><w>320</w><h>360</h></coordinates><panel_attributes>Funcion
++hashCode(): int</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>480</x><y>910</y><w>330</w><h>470</h></coordinates><panel_attributes>Funcion
 --
+_+MARGEN_MINUTOS: int = 15_
 -id: int
 -pelicula: Pelicula
 -sala: Sala
 -inicio: LocalDateTime
 -precio: double
+-cancelada: boolean
 --
 +Funcion(id, pelicula, sala, inicio, precio)
 +getFin(): LocalDateTime
++getSalaLibreDesde(): LocalDateTime
 +seSuperponeCon(otra: Funcion): boolean
 +yaComenzo(ahora: LocalDateTime): boolean
++estaVigente(ahora: LocalDateTime): boolean
 +cambiarPrecio(precio: double): void
++cancelar(): void
++isCancelada(): boolean
 +getId(): Integer
 +getPelicula(): Pelicula
 +getSala(): Sala
 +getInicio(): LocalDateTime
 +getPrecio(): double
 +equals(o: Object): boolean
-+hashCode(): int</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>900</x><y>850</y><w>320</w><h>320</h></coordinates><panel_attributes>Sala
++hashCode(): int</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>900</x><y>910</y><w>320</w><h>390</h></coordinates><panel_attributes>Sala
 --
 -id: int
 -nombre: String
 -filas: int
 -butacasPorFila: int
 -butacas: List&lt;Butaca&gt;
+-habilitada: boolean
 --
 +Sala(id, nombre, filas, butacasPorFila)
 -generarButacas(): void
++deshabilitar(): void
++habilitar(): void
++isHabilitada(): boolean
 +getCapacidad(): int
 +getButacas(): List&lt;Butaca&gt;
 +buscarButaca(fila: char, numero: int): Butaca
@@ -138,7 +167,7 @@ _+crearEstadoDemo(): EstadoCine_</panel_attributes><additional_attributes></addi
 +getId(): Integer
 +getNombre(): String
 +equals(o: Object): boolean
-+hashCode(): int</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1340</x><y>850</y><w>240</w><h>200</h></coordinates><panel_attributes>Butaca
++hashCode(): int</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1340</x><y>910</y><w>240</w><h>200</h></coordinates><panel_attributes>Butaca
 --
 -fila: char
 -numero: int
@@ -148,19 +177,21 @@ _+crearEstadoDemo(): EstadoCine_</panel_attributes><additional_attributes></addi
 +getNumero(): int
 +getCodigo(): String
 +equals(o: Object): boolean
-+hashCode(): int</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>40</x><y>1300</y><w>250</w><h>180</h></coordinates><panel_attributes>Cliente
++hashCode(): int</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>40</x><y>1470</y><w>250</w><h>200</h></coordinates><panel_attributes>Cliente
 --
 -identificacion: String
 -nombre: String
 --
 +Cliente(identificacion, nombre)
++cambiarNombre(nombre: String): void
 +getId(): String
 +getNombre(): String
 +equals(o: Object): boolean
-+hashCode(): int</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>480</x><y>1300</y><w>400</w><h>390</h></coordinates><panel_attributes>Reserva
++hashCode(): int</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>480</x><y>1470</y><w>400</w><h>430</h></coordinates><panel_attributes>Reserva
 --
 -codigo: String
 -cliente: Cliente
+-nombreCliente: String
 -funcion: Funcion
 -entradas: List&lt;Entrada&gt;
 -estado: EstadoReserva
@@ -174,11 +205,12 @@ _+crearEstadoDemo(): EstadoCine_</panel_attributes><additional_attributes></addi
 +getImporteTotal(): double
 +getId(): String
 +getCliente(): Cliente
++getNombreCliente(): String
 +getFuncion(): Funcion
 +getEntradas(): List&lt;Entrada&gt;
 +getEstado(): EstadoReserva
 +equals(o: Object): boolean
-+hashCode(): int</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1000</x><y>1300</y><w>480</w><h>200</h></coordinates><panel_attributes>/Entrada/
++hashCode(): int</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1000</x><y>1470</y><w>480</w><h>200</h></coordinates><panel_attributes>/Entrada/
 --
 -butaca: Butaca
 -precioConfirmado: double
@@ -188,36 +220,40 @@ _+crear(tipo: TipoEntrada, butaca: Butaca, precioBase: double): Entrada_
 /#calcularPrecio(precioBase: double): double/
 /+getTipo(): TipoEntrada/
 +getButaca(): Butaca
-+getPrecioConfirmado(): double</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1600</x><y>1300</y><w>160</w><h>100</h></coordinates><panel_attributes>&lt;&lt;enumeration&gt;&gt;
++getPrecioConfirmado(): double</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1600</x><y>1470</y><w>160</w><h>100</h></coordinates><panel_attributes>&lt;&lt;enumeration&gt;&gt;
 TipoEntrada
 --
 GENERAL
-ESTUDIANTE</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>480</x><y>1750</y><w>160</w><h>100</h></coordinates><panel_attributes>&lt;&lt;enumeration&gt;&gt;
+ESTUDIANTE</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>480</x><y>1960</y><w>160</w><h>100</h></coordinates><panel_attributes>&lt;&lt;enumeration&gt;&gt;
 EstadoReserva
 --
 CONFIRMADA
-CANCELADA</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1000</x><y>1580</y><w>230</w><h>100</h></coordinates><panel_attributes>EntradaGeneral
+CANCELADA</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1000</x><y>1750</y><w>230</w><h>100</h></coordinates><panel_attributes>EntradaGeneral
 --
 +EntradaGeneral(butaca, precioBase)
 #calcularPrecio(precioBase): double
-+getTipo(): TipoEntrada</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1250</x><y>1580</y><w>230</w><h>120</h></coordinates><panel_attributes>EntradaEstudiante
++getTipo(): TipoEntrada</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1250</x><y>1750</y><w>230</w><h>120</h></coordinates><panel_attributes>EntradaEstudiante
 --
 _-DESCUENTO: double = 0.20_
 --
 +EntradaEstudiante(butaca, precioBase)
 #calcularPrecio(precioBase): double
-+getTipo(): TipoEntrada</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLNote</id><coordinates><x>1620</x><y>850</y><w>400</w><h>130</h></coordinates><panel_attributes>Notas
++getTipo(): TipoEntrada</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLNote</id><coordinates><x>1620</x><y>910</y><w>400</w><h>200</h></coordinates><panel_attributes>Notas
 - Las clases del modelo, Repositorio y EstadoCine
   implementan Serializable.
 - Los servicios lanzan ReglaNegocioException y
   PersistenciaException (ambas extienden Exception).
 - Butaca se identifica por fila y numero dentro de su sala.
-bg=yellow</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>160</x><y>210</y><w>630</w><h>180</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>10;10;10;90;610;90;610;160</additional_attributes></element><element><id>Relation</id><coordinates><x>290</x><y>210</y><w>930</w><h>180</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>10;10;10;120;910;120;910;160</additional_attributes></element><element><id>Relation</id><coordinates><x>640</x><y>170</y><w>220</w><h>220</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>10;10;10;130;200;130;200;200</additional_attributes></element><element><id>Relation</id><coordinates><x>770</x><y>170</y><w>500</w><h>220</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>10;10;10;160;480;160;480;200</additional_attributes></element><element><id>Relation</id><coordinates><x>890</x><y>190</y><w>300</w><h>200</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>280;10;280;110;10;110;10;180</additional_attributes></element><element><id>Relation</id><coordinates><x>1300</x><y>190</y><w>60</w><h>200</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>40;10;40;140;10;140;10;180</additional_attributes></element><element><id>Relation</id><coordinates><x>960</x><y>260</y><w>820</w><h>130</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>800;10;800;40;10;40;10;110</additional_attributes></element><element><id>Relation</id><coordinates><x>1350</x><y>260</y><w>580</w><h>130</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>560;10;560;70;10;70;10;110</additional_attributes></element><element><id>Relation</id><coordinates><x>1990</x><y>260</y><w>30</w><h>130</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>10;10;10;110</additional_attributes></element><element><id>Relation</id><coordinates><x>600</x><y>420</y><w>120</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
-m2=5</panel_attributes><additional_attributes>100;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>230</x><y>420</y><w>100</w><h>30</h></coordinates><panel_attributes>lt=.&gt;</panel_attributes><additional_attributes>80;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1030</x><y>420</y><w>130</w><h>30</h></coordinates><panel_attributes>lt=.&gt;</panel_attributes><additional_attributes>110;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1030</x><y>570</y><w>130</w><h>30</h></coordinates><panel_attributes>lt=.&gt;</panel_attributes><additional_attributes>110;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>130</x><y>440</y><w>110</w><h>430</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;10;370;90;370;90;410</additional_attributes></element><element><id>Relation</id><coordinates><x>130</x><y>440</y><w>530</w><h>430</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;10;370;510;370;510;410</additional_attributes></element><element><id>Relation</id><coordinates><x>130</x><y>440</y><w>950</w><h>430</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;10;370;930;370;930;410</additional_attributes></element><element><id>Relation</id><coordinates><x>10</x><y>440</y><w>150</w><h>940</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>130;10;130;370;10;370;10;920;30;920</additional_attributes></element><element><id>Relation</id><coordinates><x>130</x><y>440</y><w>410</w><h>880</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;10;370;300;370;300;820;390;820;390;860</additional_attributes></element><element><id>Relation</id><coordinates><x>380</x><y>920</y><w>120</w><h>30</h></coordinates><panel_attributes>lt=-&gt;
-m2=1</panel_attributes><additional_attributes>100;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>790</x><y>920</y><w>130</w><h>30</h></coordinates><panel_attributes>lt=-&gt;
-m2=1</panel_attributes><additional_attributes>10;10;110;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1210</x><y>920</y><w>150</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
-m2=1..*</panel_attributes><additional_attributes>10;10;130;10</additional_attributes></element><element><id>Relation</id><coordinates><x>670</x><y>1200</y><w>30</w><h>120</h></coordinates><panel_attributes>lt=-&gt;
-m2=1</panel_attributes><additional_attributes>10;100;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>280</x><y>1370</y><w>220</w><h>30</h></coordinates><panel_attributes>lt=-&gt;
-m2=1</panel_attributes><additional_attributes>200;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>870</x><y>1370</y><w>150</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
-m2=1..*</panel_attributes><additional_attributes>10;10;130;10</additional_attributes></element><element><id>Relation</id><coordinates><x>550</x><y>1680</y><w>30</w><h>90</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>10;10;10;70</additional_attributes></element><element><id>Relation</id><coordinates><x>1410</x><y>1040</y><w>30</w><h>280</h></coordinates><panel_attributes>lt=-&gt;
-m2=1</panel_attributes><additional_attributes>10;260;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1470</x><y>1370</y><w>150</w><h>30</h></coordinates><panel_attributes>lt=.&gt;</panel_attributes><additional_attributes>10;10;130;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1110</x><y>1490</y><w>150</w><h>110</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>130;10;130;50;10;50;10;90</additional_attributes></element><element><id>Relation</id><coordinates><x>1230</x><y>1490</y><w>160</w><h>110</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;50;140;50;140;90</additional_attributes></element></diagram>
+- Si guardarCambios() falla, GestorEstado vuelve a cargar
+  el estado desde el archivo y lanza PersistenciaException.
+- Reserva guarda el nombre del cliente al confirmarse.
+- Una funcion cancelada no ocupa horario en la sala.
+bg=yellow</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>250</x><y>260</y><w>970</w><h>190</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>10;10;10;120;950;120;950;170</additional_attributes></element><element><id>Relation</id><coordinates><x>730</x><y>260</y><w>550</w><h>190</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>10;10;10;120;530;120;530;170</additional_attributes></element><element><id>Relation</id><coordinates><x>1280</x><y>320</y><w>60</w><h>130</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>10;10;10;60;40;60;40;110</additional_attributes></element><element><id>Relation</id><coordinates><x>1370</x><y>280</y><w>510</w><h>170</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>490;10;490;100;10;100;10;150</additional_attributes></element><element><id>Relation</id><coordinates><x>1990</x><y>280</y><w>30</w><h>170</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>10;10;10;150</additional_attributes></element><element><id>Relation</id><coordinates><x>940</x><y>90</y><w>70</w><h>30</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>10;10;50;10</additional_attributes></element><element><id>Relation</id><coordinates><x>380</x><y>20</y><w>750</w><h>60</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>10;40;10;10;730;10;730;40</additional_attributes></element><element><id>Relation</id><coordinates><x>600</x><y>480</y><w>120</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m2=5</panel_attributes><additional_attributes>100;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>230</x><y>480</y><w>100</w><h>30</h></coordinates><panel_attributes>lt=.&gt;</panel_attributes><additional_attributes>80;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1030</x><y>480</y><w>130</w><h>30</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>110;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1280</x><y>600</y><w>30</w><h>80</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>10;10;10;60</additional_attributes></element><element><id>Relation</id><coordinates><x>1030</x><y>710</y><w>130</w><h>30</h></coordinates><panel_attributes>lt=.&gt;</panel_attributes><additional_attributes>110;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1430</x><y>560</y><w>210</w><h>30</h></coordinates><panel_attributes>lt=.&gt;</panel_attributes><additional_attributes>10;10;190;10</additional_attributes></element><element><id>Relation</id><coordinates><x>130</x><y>500</y><w>110</w><h>430</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;10;370;90;370;90;410</additional_attributes></element><element><id>Relation</id><coordinates><x>130</x><y>500</y><w>540</w><h>430</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;10;370;520;370;520;410</additional_attributes></element><element><id>Relation</id><coordinates><x>130</x><y>500</y><w>950</w><h>430</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;10;370;930;370;930;410</additional_attributes></element><element><id>Relation</id><coordinates><x>10</x><y>500</y><w>150</w><h>1050</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>130;10;130;370;10;370;10;1030;30;1030</additional_attributes></element><element><id>Relation</id><coordinates><x>130</x><y>500</y><w>410</w><h>990</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;10;370;300;370;300;930;390;930;390;970</additional_attributes></element><element><id>Relation</id><coordinates><x>380</x><y>980</y><w>120</w><h>30</h></coordinates><panel_attributes>lt=-&gt;
+m2=1</panel_attributes><additional_attributes>100;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>800</x><y>980</y><w>120</w><h>30</h></coordinates><panel_attributes>lt=-&gt;
+m2=1</panel_attributes><additional_attributes>10;10;100;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1210</x><y>980</y><w>150</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m2=1..*</panel_attributes><additional_attributes>10;10;130;10</additional_attributes></element><element><id>Relation</id><coordinates><x>670</x><y>1370</y><w>30</w><h>120</h></coordinates><panel_attributes>lt=-&gt;
+m2=1</panel_attributes><additional_attributes>10;100;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>280</x><y>1540</y><w>220</w><h>30</h></coordinates><panel_attributes>lt=-&gt;
+m2=1</panel_attributes><additional_attributes>200;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>870</x><y>1540</y><w>150</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
+m2=1..*</panel_attributes><additional_attributes>10;10;130;10</additional_attributes></element><element><id>Relation</id><coordinates><x>550</x><y>1890</y><w>30</w><h>90</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>10;10;10;70</additional_attributes></element><element><id>Relation</id><coordinates><x>1410</x><y>1100</y><w>30</w><h>390</h></coordinates><panel_attributes>lt=-&gt;
+m2=1</panel_attributes><additional_attributes>10;370;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1470</x><y>1540</y><w>150</w><h>30</h></coordinates><panel_attributes>lt=.&gt;</panel_attributes><additional_attributes>10;10;130;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1110</x><y>1660</y><w>150</w><h>110</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>130;10;130;50;10;50;10;90</additional_attributes></element><element><id>Relation</id><coordinates><x>1230</x><y>1660</y><w>160</w><h>110</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;50;140;50;140;90</additional_attributes></element></diagram>
