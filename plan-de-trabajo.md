@@ -15,8 +15,8 @@ Cada una tiene una propuesta para arrancar la discusión. Al cerrarla, marcar la
   Decidido: no. Los datos de demostración los genera el programa en el primer inicio, así todos arrancan con el mismo estado.
 - [x] **Cuándo se guarda.**
   Decidido: después de cada operación que cambia algo (alta, modificación, confirmación, cancelación). Guardar solo al cerrar pierde todo si el programa se cae.
-- [ ] **Qué pasa si falla el guardado.**
-  Propuesta: avisar en pantalla, no mostrar éxito y deshacer el cambio en memoria, para que lo que se ve coincida con lo guardado.
+- [x] **Qué pasa si falla el guardado.**
+  Decidido: avisar en pantalla, no mostrar éxito y deshacer el cambio en memoria, para que lo que se ve coincida con lo guardado. Los datos del formulario se conservan para reintentar.
 - [ ] **Qué pasa si el archivo existe pero no se puede leer.**
   Propuesta: avisar y no abrir la aplicación con datos vacíos sobre ese archivo. La consigna prohíbe sobrescribirlo automáticamente.
 - [ ] **Formato del CSV.**
