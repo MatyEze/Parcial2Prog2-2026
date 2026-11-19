@@ -9,9 +9,7 @@ Cada una tiene una propuesta para arrancar la discusión. Al cerrarla, marcar la
 ### Persistencia y archivos
 
 - [x] **Dónde se guarda el archivo serializado.**
-  Decidido: en `datos/cine.dat`, dentro de la carpeta del proyecto. Consultado con el profesor. La carpeta `datos/` está ignorada en git.
-  Propuesta: `datos/cine.dat`, relativo a la carpeta del proyecto. Es fácil de mostrar en la defensa y de documentar. La alternativa es la carpeta del usuario (`user.home`), que no depende de desde dónde se ejecute pero queda escondida.
-- [x] **Si el archivo de datos se sube al repo.**
+  Decidido: en `datos/cine.dat`, dentro de la carpeta del proyecto. Consultado con el profesor. La carpeta `datos/` está ignorada en git.- [x] **Si el archivo de datos se sube al repo.**
   Decidido: no. Los datos de demostración los genera el programa en el primer inicio, así todos arrancan con el mismo estado.
 - [x] **Cuándo se guarda.**
   Decidido: después de cada operación que cambia algo (alta, modificación, confirmación, cancelación). Guardar solo al cerrar pierde todo si el programa se cae.
