@@ -65,7 +65,9 @@ Resultado: `objetos-y-reglas.md`.
 
 **Listo cuando:** cada uno puede explicar una reserva de principio a fin con sus palabras.
 
-### Etapa 2 — Definir el modelo
+### Etapa 2 — Definir el modelo (completada)
+
+Resultado: `diagrama-clases.uxf` y las decisiones de este documento.
 
 - Clases, responsabilidades, atributos y relaciones.
 - Cerrar las decisiones de reglas de negocio.
