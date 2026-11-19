@@ -120,6 +120,7 @@ Resultado: `diagrama-clases.uxf` y las decisiones de este documento.
 
 - Recorrer los diez casos mínimos de verificación y guardar las evidencias.
 - Instrucciones de ejecución, informe y diagrama actualizado.
+- Exportar el diagrama a PNG al final, cuando ya no cambie.
 - Preparar la defensa: seguir una operación desde la interfaz hasta el archivo.
 
 **Listo cuando:** otra persona puede ejecutar el proyecto y cada uno puede explicar una operación completa.
