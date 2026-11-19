@@ -13,6 +13,9 @@ nbdist/
 *.war
 hs_err_pid*
 
+# Datos
+datos/
+
 # (PDFs, notas)
 no-git-docs/
 
