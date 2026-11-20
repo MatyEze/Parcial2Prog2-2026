@@ -76,7 +76,9 @@ Resultado: `diagrama-clases.uxf` y las decisiones de este documento.
 
 **Listo cuando:** cada uno puede explicar qué representa cada clase y por qué se relaciona con las demás.
 
-### Etapa 3 — Operaciones básicas
+### Etapa 3 — Operaciones básicas (completada)
+
+Resultado: el proyecto de NetBeans y los paquetes `cine.modelo`, `cine.excepciones`, `cine.persistencia` (estado en memoria) y `cine.servicios`.
 
 - Crear el proyecto en NetBeans y los paquetes.
 - Registrar películas y salas, generar butacas, programar funciones.
