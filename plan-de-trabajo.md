@@ -33,6 +33,7 @@ Cada una tiene una propuesta para arrancar la discusión. Al cerrarla, marcar la
   - **Funciones:** se pueden cancelar a mano, con el mismo cartel de advertencia y la misma cancelación en cascada de sus reservas. No se les cambia película, sala ni horario.
   - **Precio de una función:** se puede modificar. No afecta a las reservas ya creadas, solo a las futuras.
 - [x] **Margen entre funciones.** Decidido: 15 minutos fijos entre el fin de una función y el inicio de la siguiente en la misma sala. La hora de fin que se muestra sigue siendo inicio más duración; el margen solo se usa al validar superposiciones. Las funciones canceladas no cuentan. El margen tiene que estar a la vista para no confundir: el formulario de función muestra la hora de fin y desde qué hora queda libre la sala, y el mensaje de rechazo dice explícitamente cuándo el choque es por el margen (por ejemplo: "La sala queda libre a las 20:15: la función anterior termina a las 20:00 y se dejan 15 minutos de margen"). Hay que documentarlo en el informe.
+- [x] **Tamaño máximo de una sala.** Decidido: hasta 26 filas, porque se nombran con letras de la A a la Z, y hasta 40 butacas por fila. Fuera de esos límites se rechaza con un mensaje.
 - [x] **Tipo de dato para el dinero.** Decidido: `double`. Es una simplificación consciente porque el importe es informativo; al mostrarlo se redondea a dos decimales. Va al informe.
 
 ### Proyecto y forma de trabajo
@@ -96,6 +97,7 @@ Resultado: `diagrama-clases.uxf` y las decisiones de este documento.
 - Guardar y recuperar el estado completo por serialización.
 - Primer inicio con datos de demostración: 2 salas, 3 películas, 6 funciones y reservas.
 - Manejo de errores de lectura y escritura.
+- Pendiente de la revisión de la etapa 3: hoy los servicios cambian el estado en memoria antes de guardar. Cuando el guardado pueda fallar, hay que deshacer el cambio completo recargando el estado desde el archivo, sobre todo en las cancelaciones en cascada al desactivar una película o deshabilitar una sala.
 
 **Listo cuando:** se cierra y se abre el programa y las reservas y la disponibilidad se conservan.
 
