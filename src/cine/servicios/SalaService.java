@@ -13,6 +13,7 @@ public class SalaService {
 
     // Las filas se nombran con letras de la A a la Z.
     private static final int MAXIMO_FILAS = 26;
+    private static final int MAXIMO_BUTACAS_POR_FILA = 40;
 
     private GestorEstado gestor;
     private FuncionService funcionService;
@@ -35,8 +36,9 @@ public class SalaService {
             throw new ReglaNegocioException("La cantidad de filas tiene que estar entre 1 y "
                     + MAXIMO_FILAS + " (las filas se nombran de la A a la Z).");
         }
-        if (butacasPorFila < 1) {
-            throw new ReglaNegocioException("Cada fila tiene que tener al menos una butaca.");
+        if (butacasPorFila < 1 || butacasPorFila > MAXIMO_BUTACAS_POR_FILA) {
+            throw new ReglaNegocioException("La cantidad de butacas por fila tiene que estar entre 1 y "
+                    + MAXIMO_BUTACAS_POR_FILA + ".");
         }
         EstadoCine estado = gestor.getEstado();
         Sala sala = new Sala(estado.siguienteIdSala(), nombreLimpio, filas, butacasPorFila);

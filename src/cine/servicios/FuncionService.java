@@ -172,8 +172,9 @@ public class FuncionService {
     }
 
     private void validarPrecio(double precio) throws ReglaNegocioException {
-        if (precio <= 0) {
-            throw new ReglaNegocioException("El precio tiene que ser mayor que cero.");
+        // Se compara con "mayor que" para rechazar también NaN, que no es mayor que ningún número.
+        if (!(precio > 0) || Double.isInfinite(precio)) {
+            throw new ReglaNegocioException("El precio tiene que ser un número mayor que cero.");
         }
     }
 
