@@ -86,7 +86,9 @@ Resultado: el proyecto de NetBeans y los paquetes `cine.modelo`, `cine.excepcion
 
 **Listo cuando:** se crea una función válida y se rechaza una superposición de horarios.
 
-### Etapa 4 — La reserva
+### Etapa 4 — La reserva (completada)
+
+Resultado: `Cliente`, `Reserva`, `Entrada` con sus dos tipos y los enums en `cine.modelo`, clientes y reservas en el estado, y `ReservaService` con disponibilidad, confirmación y listado.
 
 - Consultar disponibilidad por función.
 - Seleccionar butacas, asociar cliente, calcular precios con los tipos de entrada.
@@ -117,6 +119,7 @@ Resultado: el proyecto de NetBeans y los paquetes `cine.modelo`, `cine.excepcion
 - Cancelación y liberación de butacas.
 - Comprobante.
 - Exportación a CSV.
+- Pendiente de la etapa 4: `ReservaService` hoy recibe solo el gestor. Acá se le suma `ExportadorReservas` en el constructor, como en el diagrama, junto con `cancelar`, `buscar` y `exportarCsv`.
 
 **Listo cuando:** están todos los módulos de la consigna.
 
