@@ -4,6 +4,7 @@ import cine.excepciones.PersistenciaException;
 import cine.excepciones.ReglaNegocioException;
 import cine.modelo.Funcion;
 import cine.modelo.Pelicula;
+import cine.modelo.Reserva;
 import cine.modelo.Sala;
 import cine.persistencia.EstadoCine;
 import cine.persistencia.GestorEstado;
@@ -82,8 +83,23 @@ public class FuncionService {
     }
 
     void cancelarEnCascada(Funcion funcion) {
-        // Cuando existan las reservas, aquí también se cancelan las reservas de la función.
+        // Las reservas no se borran: quedan canceladas y sus butacas vuelven a estar libres.
+        for (Reserva reserva : gestor.getEstado().getReservas().listar()) {
+            if (reserva.estaConfirmada() && reserva.getFuncion().equals(funcion)) {
+                reserva.cancelar();
+            }
+        }
         funcion.cancelar();
+    }
+
+    public int cantidadReservasConfirmadas(Funcion funcion) {
+        int cantidad = 0;
+        for (Reserva reserva : gestor.getEstado().getReservas().listar()) {
+            if (reserva.estaConfirmada() && reserva.getFuncion().equals(funcion)) {
+                cantidad++;
+            }
+        }
+        return cantidad;
     }
 
     public List<Funcion> futurasVigentesDePelicula(int idPelicula) {
