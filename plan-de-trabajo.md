@@ -96,7 +96,9 @@ Resultado: `Cliente`, `Reserva`, `Entrada` con sus dos tipos y los enums en `cin
 
 **Listo cuando:** una reserva se confirma y esas butacas dejan de estar disponibles para esa función, pero siguen libres en otra.
 
-### Etapa 5 — Persistencia
+### Etapa 5 — Persistencia (completada)
+
+Resultado: `PersistenciaCine`, `GestorEstado` con recarga si falla el guardado y `DatosIniciales` en `cine.persistencia`, y la carga del estado al iniciar `CineApp`. Las fechas de las funciones de demostración son el día siguiente y el subsiguiente al primer inicio.
 
 - Guardar y recuperar el estado completo por serialización.
 - Primer inicio con datos de demostración: 2 salas, 3 películas, 6 funciones y reservas.
@@ -110,6 +112,7 @@ Resultado: `Cliente`, `Reserva`, `Entrada` con sus dos tipos y los enums en `cin
 - Pantallas y controladores según los wireframes.
 - Los controladores delegan en los servicios; las reglas no van en los botones.
 - Errores informados en pantalla, sin perder lo que se había cargado.
+- Pendiente de la etapa 5: si falla un guardado el estado se recarga desde el archivo, así que las pantallas tienen que guardar ids o códigos y volver a pedir los objetos a los servicios. Si `GestorEstado.isEstadoPerdido()` da verdadero, se avisa y se cierra la aplicación.
 
 **Listo cuando:** el recorrido de reserva se completa desde la interfaz.
 
