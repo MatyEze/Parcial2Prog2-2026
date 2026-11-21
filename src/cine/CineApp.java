@@ -7,13 +7,12 @@ import cine.servicios.FuncionService;
 import cine.servicios.PeliculaService;
 import cine.servicios.ReservaService;
 import cine.servicios.SalaService;
+import cine.ui.VentanaPrincipal;
 import java.nio.file.Paths;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 public class CineApp extends Application {
@@ -39,9 +38,10 @@ public class CineApp extends Application {
         salaService = new SalaService(gestor, funcionService);
         reservaService = new ReservaService(gestor);
 
-        StackPane raiz = new StackPane(new Label("Reservas de cine"));
+        VentanaPrincipal principal = new VentanaPrincipal(peliculaService, salaService, funcionService,
+                reservaService, gestor);
         ventana.setTitle("Reservas de cine");
-        ventana.setScene(new Scene(raiz, 800, 600));
+        ventana.setScene(new Scene(principal.crearVista(), 1050, 680));
         ventana.show();
     }
 
