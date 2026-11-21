@@ -126,6 +126,11 @@ public class FuncionService {
         return resultado;
     }
 
+    // Devuelve null si no existe, igual que la búsqueda de los repositorios.
+    public Funcion buscar(int id) {
+        return gestor.getEstado().getFunciones().buscar(id);
+    }
+
     public List<Funcion> listar() {
         List<Funcion> resultado = gestor.getEstado().getFunciones().listar();
         Collections.sort(resultado, POR_INICIO);
