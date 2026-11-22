@@ -39,7 +39,7 @@ public class CineApp extends Application {
         salaService = new SalaService(gestor, funcionService);
         reservaService = new ReservaService(gestor, new ExportadorReservas());
 
-        VentanaPrincipal principal = new VentanaPrincipal(peliculaService, salaService, funcionService,
+        VentanaPrincipal principal = new VentanaPrincipal(ventana, peliculaService, salaService, funcionService,
                 reservaService, gestor);
         ventana.setTitle("Reservas de cine");
         ventana.setScene(new Scene(principal.crearVista(), 1050, 680));

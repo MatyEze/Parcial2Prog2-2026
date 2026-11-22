@@ -30,9 +30,10 @@ public class PantallaComprobante {
 
         Button nueva = Componentes.botonPrincipal("Nueva reserva");
         nueva.setOnAction(e -> ventana.mostrarCartelera());
-        // Se habilita cuando exista la consulta de reservas.
+        // La consulta se abre ya filtrada por el código de esta reserva.
+        String codigo = reserva.getId();
         Button verReservas = new Button("Ver reservas");
-        verReservas.setDisable(true);
+        verReservas.setOnAction(e -> ventana.mostrarReservas(codigo));
         HBox botones = new HBox(10, nueva, verReservas);
         botones.setAlignment(Pos.CENTER_LEFT);
 

@@ -1,5 +1,6 @@
 package cine.ui;
 
+import cine.modelo.EstadoReserva;
 import cine.modelo.Funcion;
 import cine.modelo.TipoEntrada;
 import java.text.DecimalFormat;
@@ -109,6 +110,17 @@ public class Formato {
                 return "Estudiante";
             default:
                 return tipo.toString();
+        }
+    }
+
+    public static String estadoReserva(EstadoReserva estado) {
+        switch (estado) {
+            case CONFIRMADA:
+                return "Confirmada";
+            case CANCELADA:
+                return "Cancelada";
+            default:
+                return estado.toString();
         }
     }
 }

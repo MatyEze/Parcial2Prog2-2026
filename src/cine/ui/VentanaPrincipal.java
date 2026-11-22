@@ -21,11 +21,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 // Ventana con el encabezado, el menú lateral y la pantalla actual en el centro.
 // Las pantallas le piden a esta clase que muestre la pantalla siguiente.
 public class VentanaPrincipal {
 
+    // Se guarda para que los cuadros de diálogo de archivos queden asociados a la ventana.
+    private Stage escenario;
     private PeliculaService peliculaService;
     private SalaService salaService;
     private FuncionService funcionService;
@@ -34,8 +37,9 @@ public class VentanaPrincipal {
     private GestorEstado gestor;
     private BorderPane raiz;
 
-    public VentanaPrincipal(PeliculaService peliculaService, SalaService salaService,
+    public VentanaPrincipal(Stage escenario, PeliculaService peliculaService, SalaService salaService,
             FuncionService funcionService, ReservaService reservaService, GestorEstado gestor) {
+        this.escenario = escenario;
         this.peliculaService = peliculaService;
         this.salaService = salaService;
         this.funcionService = funcionService;
@@ -67,6 +71,10 @@ public class VentanaPrincipal {
         return reservaService;
     }
 
+    public Stage getEscenario() {
+        return escenario;
+    }
+
     public void mostrarCartelera() {
         mostrar(new PantallaCartelera(this).crearVista());
     }
@@ -94,6 +102,28 @@ public class VentanaPrincipal {
 
     public void mostrarComprobante(Reserva reserva) {
         mostrar(new PantallaComprobante(this).crearVista(reserva));
+    }
+
+    public void mostrarReservas() {
+        mostrarReservas("");
+    }
+
+    // Abre la consulta con el texto ya escrito y buscado, por ejemplo el código de la
+    // reserva recién confirmada.
+    public void mostrarReservas(String textoInicial) {
+        mostrar(new PantallaReservas(this).crearVista(textoInicial));
+    }
+
+    // La reserva se vuelve a consultar porque el estado pudo recargarse después de un error al guardar.
+    public void mostrarDetalleReserva(String codigo) {
+        Reserva reserva = buscarReserva(codigo);
+        if (reserva == null) {
+            Dialogos.mostrarInformacion("La reserva ya no existe",
+                    "La reserva seleccionada ya no existe. Se vuelve al listado de reservas.");
+            mostrarReservas();
+            return;
+        }
+        mostrar(new PantallaDetalleReserva(this, codigo).crearVista(reserva));
     }
 
     public void mostrarPeliculas() {
@@ -163,6 +193,15 @@ public class VentanaPrincipal {
         return null;
     }
 
+    public Reserva buscarReserva(String codigo) {
+        for (Reserva reserva : reservaService.listar()) {
+            if (reserva.getId().equals(codigo)) {
+                return reserva;
+            }
+        }
+        return null;
+    }
+
     // Una línea por función con fecha, hora, el nombre de la sala o el título de la película
     // y la cantidad de reservas confirmadas que se cancelarían con ella.
     public String describirFuncionesAfectadas(List<Funcion> funciones, boolean nombrarPelicula) {
@@ -227,12 +266,11 @@ public class VentanaPrincipal {
         return barra;
     }
 
-    // Las opciones de pantallas que todavía no existen se muestran deshabilitadas.
     private Node crearMenu() {
         Button cartelera = crearOpcionMenu("Cartelera");
         cartelera.setOnAction(e -> mostrarCartelera());
         Button reservas = crearOpcionMenu("Reservas");
-        reservas.setDisable(true);
+        reservas.setOnAction(e -> mostrarReservas());
         Button peliculas = crearOpcionMenu("Películas");
         peliculas.setOnAction(e -> mostrarPeliculas());
         Button salas = crearOpcionMenu("Salas");
