@@ -9,9 +9,13 @@ import cine.modelo.Funcion;
 import cine.modelo.Reserva;
 import cine.modelo.TipoEntrada;
 import cine.persistencia.EstadoCine;
+import cine.persistencia.ExportadorReservas;
 import cine.persistencia.GestorEstado;
+import java.nio.file.Path;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -22,10 +26,14 @@ public class ReservaService {
     private static final int MINIMO_DIGITOS_IDENTIFICACION = 7;
     private static final int MAXIMO_DIGITOS_IDENTIFICACION = 8;
 
-    private GestorEstado gestor;
+    private static final Comparator<Reserva> POR_CODIGO = new PorCodigo();
 
-    public ReservaService(GestorEstado gestor) {
+    private GestorEstado gestor;
+    private ExportadorReservas exportador;
+
+    public ReservaService(GestorEstado gestor, ExportadorReservas exportador) {
         this.gestor = gestor;
+        this.exportador = exportador;
     }
 
     // La ocupación se calcula a partir de las reservas confirmadas de la función:
@@ -70,8 +78,48 @@ public class ReservaService {
         return reserva;
     }
 
+    // La reserva no se borra: queda cancelada en el historial y sus butacas vuelven a estar
+    // libres, porque la ocupación solo cuenta las reservas confirmadas.
+    public void cancelar(String codigo) throws ReglaNegocioException, PersistenciaException {
+        Reserva reserva = null;
+        if (codigo != null) {
+            reserva = gestor.getEstado().getReservas().buscar(codigo.trim());
+        }
+        if (reserva == null) {
+            throw new ReglaNegocioException("No existe la reserva seleccionada.");
+        }
+        if (!reserva.estaConfirmada()) {
+            throw new ReglaNegocioException("La reserva " + reserva.getId() + " ya está cancelada.");
+        }
+        reserva.cancelar();
+        gestor.guardarCambios();
+    }
+
+    // Sin texto devuelve todas las reservas. Con texto busca el código exacto, sin importar
+    // mayúsculas, o la identificación exacta del cliente.
+    public List<Reserva> buscar(String texto) {
+        String buscado = "";
+        if (texto != null) {
+            buscado = texto.trim();
+        }
+        List<Reserva> resultado = new ArrayList<>();
+        for (Reserva reserva : gestor.getEstado().getReservas().listar()) {
+            if (buscado.isEmpty() || reserva.getId().equalsIgnoreCase(buscado)
+                    || reserva.getCliente().getId().equals(buscado)) {
+                resultado.add(reserva);
+            }
+        }
+        Collections.sort(resultado, POR_CODIGO);
+        return resultado;
+    }
+
     public List<Reserva> listar() {
         return gestor.getEstado().getReservas().listar();
+    }
+
+    // Se exportan todas las reservas, también las canceladas; no se modifica ni se guarda el estado.
+    public void exportarCsv(Path destino) throws PersistenciaException {
+        exportador.exportarCsv(buscar(""), destino);
     }
 
     private Funcion validarFuncion(Funcion funcion) throws ReglaNegocioException {
@@ -146,5 +194,19 @@ public class ReservaService {
                     + " dígitos, sin puntos ni espacios.");
         }
         return limpia;
+    }
+
+    private static class PorCodigo implements Comparator<Reserva> {
+
+        // Se compara primero el largo para que CIN-1000 quede después de CIN-999;
+        // comparando solo el texto quedaría antes.
+        @Override
+        public int compare(Reserva a, Reserva b) {
+            int porLargo = Integer.compare(a.getId().length(), b.getId().length());
+            if (porLargo != 0) {
+                return porLargo;
+            }
+            return a.getId().compareTo(b.getId());
+        }
     }
 }

@@ -1,6 +1,7 @@
 package cine;
 
 import cine.excepciones.PersistenciaException;
+import cine.persistencia.ExportadorReservas;
 import cine.persistencia.GestorEstado;
 import cine.persistencia.PersistenciaCine;
 import cine.servicios.FuncionService;
@@ -36,7 +37,7 @@ public class CineApp extends Application {
         funcionService = new FuncionService(gestor);
         peliculaService = new PeliculaService(gestor, funcionService);
         salaService = new SalaService(gestor, funcionService);
-        reservaService = new ReservaService(gestor);
+        reservaService = new ReservaService(gestor, new ExportadorReservas());
 
         VentanaPrincipal principal = new VentanaPrincipal(peliculaService, salaService, funcionService,
                 reservaService, gestor);
