@@ -2,6 +2,7 @@ package cine.ui;
 
 import cine.excepciones.PersistenciaException;
 import cine.excepciones.ReglaNegocioException;
+import cine.modelo.EstadoFuncion;
 import cine.modelo.Funcion;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -50,25 +51,15 @@ public class PantallaFunciones {
                     new Label(Formato.fecha(funcion.getInicio())),
                     new Label(Formato.hora(funcion.getInicio())),
                     new Label(Formato.dinero(funcion.getPrecio())),
-                    new Label(describirEstado(funcion, ahora)),
+                    new Label(Formato.estadoFuncion(funcion.getEstado(ahora))),
                     crearAcciones(funcion, ahora));
         }
         listado.getChildren().add(tabla);
     }
 
-    private String describirEstado(Funcion funcion, LocalDateTime ahora) {
-        if (funcion.isCancelada()) {
-            return "Cancelada";
-        }
-        if (funcion.yaComenzo(ahora)) {
-            return "Finalizada";
-        }
-        return "Vigente";
-    }
-
     // Solo las funciones vigentes tienen acciones; las demás ya no se pueden modificar.
     private Node crearAcciones(Funcion funcion, LocalDateTime ahora) {
-        if (!funcion.estaVigente(ahora)) {
+        if (funcion.getEstado(ahora) != EstadoFuncion.VIGENTE) {
             return new Label("");
         }
         int idFuncion = funcion.getId();

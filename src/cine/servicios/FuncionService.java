@@ -2,6 +2,7 @@ package cine.servicios;
 
 import cine.excepciones.PersistenciaException;
 import cine.excepciones.ReglaNegocioException;
+import cine.modelo.EstadoFuncion;
 import cine.modelo.Funcion;
 import cine.modelo.Pelicula;
 import cine.modelo.Reserva;
@@ -65,6 +66,15 @@ public class FuncionService {
 
     public void cambiarPrecio(int id, double precio) throws ReglaNegocioException, PersistenciaException {
         Funcion funcion = buscarExistente(id);
+        // La pantalla oculta la acción en estos casos, pero el listado pudo quedar abierto
+        // mientras pasaba la hora de inicio.
+        EstadoFuncion estado = funcion.getEstado(LocalDateTime.now());
+        if (estado == EstadoFuncion.CANCELADA) {
+            throw new ReglaNegocioException("La función está cancelada y no se puede cambiar el precio.");
+        }
+        if (estado == EstadoFuncion.FINALIZADA) {
+            throw new ReglaNegocioException("La función ya finalizó y no se puede cambiar el precio.");
+        }
         validarPrecio(precio);
         funcion.cambiarPrecio(precio);
         gestor.guardarCambios();
@@ -72,11 +82,12 @@ public class FuncionService {
 
     public void cancelar(int id) throws ReglaNegocioException, PersistenciaException {
         Funcion funcion = buscarExistente(id);
-        if (funcion.isCancelada()) {
+        EstadoFuncion estado = funcion.getEstado(LocalDateTime.now());
+        if (estado == EstadoFuncion.CANCELADA) {
             throw new ReglaNegocioException("La función ya está cancelada.");
         }
-        if (funcion.yaComenzo(LocalDateTime.now())) {
-            throw new ReglaNegocioException("La función ya comenzó y no se puede cancelar.");
+        if (estado == EstadoFuncion.FINALIZADA) {
+            throw new ReglaNegocioException("La función ya finalizó y no se puede cancelar.");
         }
         cancelarEnCascada(funcion);
         gestor.guardarCambios();

@@ -1,5 +1,6 @@
 package cine.ui;
 
+import cine.modelo.EstadoFuncion;
 import cine.modelo.EstadoReserva;
 import cine.modelo.Funcion;
 import cine.modelo.TipoEntrada;
@@ -110,6 +111,19 @@ public class Formato {
                 return "Estudiante";
             default:
                 return tipo.toString();
+        }
+    }
+
+    public static String estadoFuncion(EstadoFuncion estado) {
+        switch (estado) {
+            case VIGENTE:
+                return "Vigente";
+            case FINALIZADA:
+                return "Finalizada";
+            case CANCELADA:
+                return "Cancelada";
+            default:
+                return estado.toString();
         }
     }
 

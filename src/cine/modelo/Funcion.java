@@ -52,8 +52,19 @@ public class Funcion implements Identificable<Integer>, Serializable {
         return !ahora.isBefore(inicio);
     }
 
+    // El estado se calcula en cada consulta y no se guarda, porque depende de la hora actual.
+    public EstadoFuncion getEstado(LocalDateTime ahora) {
+        if (cancelada) {
+            return EstadoFuncion.CANCELADA;
+        }
+        if (yaComenzo(ahora)) {
+            return EstadoFuncion.FINALIZADA;
+        }
+        return EstadoFuncion.VIGENTE;
+    }
+
     public boolean estaVigente(LocalDateTime ahora) {
-        return !cancelada && !yaComenzo(ahora);
+        return getEstado(ahora) == EstadoFuncion.VIGENTE;
     }
 
     public void cambiarPrecio(double precio) {

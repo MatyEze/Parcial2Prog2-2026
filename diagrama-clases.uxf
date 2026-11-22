@@ -123,7 +123,7 @@ _+crearEstadoDemo(): EstadoCine_</panel_attributes><additional_attributes></addi
 +getTitulo(): String
 +getDuracionMinutos(): int
 +equals(o: Object): boolean
-+hashCode(): int</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>480</x><y>910</y><w>330</w><h>470</h></coordinates><panel_attributes>Funcion
++hashCode(): int</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>480</x><y>910</y><w>330</w><h>490</h></coordinates><panel_attributes>Funcion
 --
 _+MARGEN_MINUTOS: int = 15_
 -id: int
@@ -138,6 +138,7 @@ _+MARGEN_MINUTOS: int = 15_
 +getSalaLibreDesde(): LocalDateTime
 +seSuperponeCon(otra: Funcion): boolean
 +yaComenzo(ahora: LocalDateTime): boolean
++getEstado(ahora: LocalDateTime): EstadoFuncion
 +estaVigente(ahora: LocalDateTime): boolean
 +cambiarPrecio(precio: double): void
 +cancelar(): void
@@ -232,6 +233,11 @@ ESTUDIANTE</panel_attributes><additional_attributes></additional_attributes></el
 EstadoReserva
 --
 CONFIRMADA
+CANCELADA</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>250</x><y>1270</y><w>160</w><h>120</h></coordinates><panel_attributes>&lt;&lt;enumeration&gt;&gt;
+EstadoFuncion
+--
+VIGENTE
+FINALIZADA
 CANCELADA</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1000</x><y>1750</y><w>230</w><h>100</h></coordinates><panel_attributes>EntradaGeneral
 --
 +EntradaGeneral(butaca, precioBase)
@@ -257,8 +263,8 @@ bg=yellow</panel_attributes><additional_attributes></additional_attributes></ele
 m2=5</panel_attributes><additional_attributes>100;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>230</x><y>480</y><w>100</w><h>30</h></coordinates><panel_attributes>lt=.&gt;</panel_attributes><additional_attributes>80;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1030</x><y>480</y><w>130</w><h>30</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>110;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1280</x><y>620</y><w>30</w><h>60</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>10;10;10;40</additional_attributes></element><element><id>Relation</id><coordinates><x>1030</x><y>710</y><w>130</w><h>30</h></coordinates><panel_attributes>lt=.&gt;</panel_attributes><additional_attributes>110;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1430</x><y>560</y><w>210</w><h>30</h></coordinates><panel_attributes>lt=.&gt;</panel_attributes><additional_attributes>10;10;190;10</additional_attributes></element><element><id>Relation</id><coordinates><x>130</x><y>500</y><w>110</w><h>430</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;10;370;90;370;90;410</additional_attributes></element><element><id>Relation</id><coordinates><x>130</x><y>500</y><w>540</w><h>430</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;10;370;520;370;520;410</additional_attributes></element><element><id>Relation</id><coordinates><x>130</x><y>500</y><w>950</w><h>430</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;10;370;930;370;930;410</additional_attributes></element><element><id>Relation</id><coordinates><x>10</x><y>500</y><w>150</w><h>1050</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>130;10;130;370;10;370;10;1030;30;1030</additional_attributes></element><element><id>Relation</id><coordinates><x>130</x><y>500</y><w>410</w><h>990</h></coordinates><panel_attributes>lt=&lt;&lt;.</panel_attributes><additional_attributes>10;10;10;370;300;370;300;930;390;930;390;970</additional_attributes></element><element><id>Relation</id><coordinates><x>380</x><y>980</y><w>120</w><h>30</h></coordinates><panel_attributes>lt=-&gt;
 m2=1</panel_attributes><additional_attributes>100;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>800</x><y>980</y><w>120</w><h>30</h></coordinates><panel_attributes>lt=-&gt;
 m2=1</panel_attributes><additional_attributes>10;10;100;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1210</x><y>980</y><w>150</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
-m2=1..*</panel_attributes><additional_attributes>10;10;130;10</additional_attributes></element><element><id>Relation</id><coordinates><x>670</x><y>1370</y><w>30</w><h>120</h></coordinates><panel_attributes>lt=-&gt;
+m2=1..*</panel_attributes><additional_attributes>10;10;130;10</additional_attributes></element><element><id>Relation</id><coordinates><x>670</x><y>1390</y><w>30</w><h>100</h></coordinates><panel_attributes>lt=-&gt;
 m2=1</panel_attributes><additional_attributes>10;100;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>280</x><y>1540</y><w>220</w><h>30</h></coordinates><panel_attributes>lt=-&gt;
 m2=1</panel_attributes><additional_attributes>200;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>870</x><y>1540</y><w>150</w><h>30</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;-
 m2=1..*</panel_attributes><additional_attributes>10;10;130;10</additional_attributes></element><element><id>Relation</id><coordinates><x>550</x><y>1890</y><w>30</w><h>90</h></coordinates><panel_attributes>lt=-&gt;</panel_attributes><additional_attributes>10;10;10;70</additional_attributes></element><element><id>Relation</id><coordinates><x>1410</x><y>1100</y><w>30</w><h>390</h></coordinates><panel_attributes>lt=-&gt;
-m2=1</panel_attributes><additional_attributes>10;370;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1470</x><y>1540</y><w>150</w><h>30</h></coordinates><panel_attributes>lt=.&gt;</panel_attributes><additional_attributes>10;10;130;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1110</x><y>1660</y><w>150</w><h>110</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>130;10;130;50;10;50;10;90</additional_attributes></element><element><id>Relation</id><coordinates><x>1230</x><y>1660</y><w>160</w><h>110</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;50;140;50;140;90</additional_attributes></element></diagram>
+m2=1</panel_attributes><additional_attributes>10;370;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1470</x><y>1540</y><w>150</w><h>30</h></coordinates><panel_attributes>lt=.&gt;</panel_attributes><additional_attributes>10;10;130;10</additional_attributes></element><element><id>Relation</id><coordinates><x>400</x><y>1310</y><w>100</w><h>30</h></coordinates><panel_attributes>lt=.&gt;</panel_attributes><additional_attributes>80;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>1110</x><y>1660</y><w>150</w><h>110</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>130;10;130;50;10;50;10;90</additional_attributes></element><element><id>Relation</id><coordinates><x>1230</x><y>1660</y><w>160</w><h>110</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;50;140;50;140;90</additional_attributes></element></diagram>
