@@ -107,7 +107,9 @@ Resultado: `PersistenciaCine`, `GestorEstado` con recarga si falla el guardado y
 
 **Listo cuando:** se cierra y se abre el programa y las reservas y la disponibilidad se conservan.
 
-### Etapa 6 — JavaFX
+### Etapa 6 — JavaFX (completada)
+
+Resultado: el paquete `cine.ui` con la ventana principal, el recorrido de reserva (cartelera, butacas, cliente y entradas, revisión y comprobante) y las pantallas de películas, salas y funciones. La consulta de reservas queda para la etapa 7.
 
 - Pantallas y controladores según los wireframes.
 - Los controladores delegan en los servicios; las reglas no van en los botones.
@@ -123,6 +125,7 @@ Resultado: `PersistenciaCine`, `GestorEstado` con recarga si falla el guardado y
 - Comprobante.
 - Exportación a CSV.
 - Pendiente de la etapa 4: `ReservaService` hoy recibe solo el gestor. Acá se le suma `ExportadorReservas` en el constructor, como en el diagrama, junto con `cancelar`, `buscar` y `exportarCsv`.
+- Pendiente de la etapa 6: la opción "Reservas" del menú y el botón "Ver reservas" del comprobante están deshabilitados hasta que exista la pantalla de consulta.
 
 **Listo cuando:** están todos los módulos de la consigna.
 
