@@ -118,7 +118,9 @@ Resultado: el paquete `cine.ui` con la ventana principal, el recorrido de reserv
 
 **Listo cuando:** el recorrido de reserva se completa desde la interfaz.
 
-### Etapa 7 — Completar funcionalidades
+### Etapa 7 — Completar funcionalidades (completada)
+
+Resultado: `ExportadorReservas` en `cine.persistencia`, `cancelar`, `buscar` y `exportarCsv` en `ReservaService`, y las pantallas de consulta y de detalle de reservas. Se agregó el estado de la función (vigente, en emisión, finalizada o cancelada), que se calcula con la hora actual y define qué se puede cancelar o modificar. Los datos de demostración pasan a tener 8 funciones y 5 reservas: se sumaron una función finalizada, del día anterior al primer inicio, y una en emisión.
 
 - Consulta por código o identificación.
 - Cancelación y liberación de butacas.
