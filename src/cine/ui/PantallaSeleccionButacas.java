@@ -46,12 +46,7 @@ public class PantallaSeleccionButacas {
         Set<Butaca> ocupadas = ventana.getReservaService().butacasOcupadas(funcion);
         quitarSeleccionadasOcupadas(ocupadas);
 
-        Label pantallaCine = new Label("PANTALLA");
-        pantallaCine.setMaxWidth(Double.MAX_VALUE);
-        pantallaCine.setAlignment(Pos.CENTER);
-        pantallaCine.setStyle("-fx-background-color: #dddddd; -fx-padding: 4; -fx-font-weight: bold;");
-
-        VBox sala = new VBox(14, pantallaCine, crearGrilla(funcion, ocupadas), crearLeyenda());
+        VBox sala = new VBox(14, Componentes.indicadorPantalla(), crearGrilla(funcion, ocupadas), crearLeyenda());
 
         BorderPane contenido = new BorderPane();
         contenido.setCenter(sala);
@@ -59,7 +54,7 @@ public class PantallaSeleccionButacas {
         BorderPane.setMargin(contenido.getRight(), new Insets(0, 0, 0, 24));
 
         Button volver = new Button("← Volver");
-        volver.setOnAction(e -> ventana.mostrarCartelera());
+        volver.setOnAction(e -> volver());
 
         VBox pantalla = Componentes.pantalla();
         pantalla.getChildren().addAll(
@@ -127,6 +122,14 @@ public class PantallaSeleccionButacas {
             actualizarBoton(codigo, boton);
         }
         return boton;
+    }
+
+    private void volver() {
+        if (reserva.isAbiertaDesdeFunciones()) {
+            ventana.mostrarFunciones();
+        } else {
+            ventana.mostrarCartelera();
+        }
     }
 
     private void alternarButaca(String codigo, Button boton) {

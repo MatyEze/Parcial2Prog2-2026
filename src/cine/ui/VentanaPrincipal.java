@@ -2,13 +2,16 @@ package cine.ui;
 
 import cine.excepciones.PersistenciaException;
 import cine.modelo.Funcion;
+import cine.modelo.Pelicula;
 import cine.modelo.Reserva;
+import cine.modelo.Sala;
 import cine.persistencia.GestorEstado;
 import cine.servicios.FuncionService;
 import cine.servicios.PeliculaService;
 import cine.servicios.ReservaService;
 import cine.servicios.SalaService;
 import java.time.LocalDateTime;
+import java.util.List;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -93,6 +96,91 @@ public class VentanaPrincipal {
         mostrar(new PantallaComprobante(this).crearVista(reserva));
     }
 
+    public void mostrarPeliculas() {
+        mostrar(new PantallaPeliculas(this).crearVista());
+    }
+
+    public void mostrarRegistroPelicula() {
+        mostrar(new PantallaFormularioPelicula(this, null).crearVista(null));
+    }
+
+    // La película se vuelve a consultar porque el estado pudo recargarse después de un error al guardar.
+    public void mostrarModificacionPelicula(int idPelicula) {
+        Pelicula pelicula = buscarPelicula(idPelicula);
+        if (pelicula == null) {
+            Dialogos.mostrarInformacion("La película ya no existe",
+                    "La película seleccionada ya no existe. Se vuelve al listado de películas.");
+            mostrarPeliculas();
+            return;
+        }
+        mostrar(new PantallaFormularioPelicula(this, idPelicula).crearVista(pelicula));
+    }
+
+    public void mostrarSalas() {
+        mostrar(new PantallaSalas(this).crearVista());
+    }
+
+    public void mostrarRegistroSala() {
+        mostrar(new PantallaRegistroSala(this).crearVista());
+    }
+
+    public void mostrarDistribucionSala(int idSala) {
+        Sala sala = buscarSala(idSala);
+        if (sala == null) {
+            Dialogos.mostrarInformacion("La sala ya no existe",
+                    "La sala seleccionada ya no existe. Se vuelve al listado de salas.");
+            mostrarSalas();
+            return;
+        }
+        mostrar(new PantallaDistribucionSala(this).crearVista(sala));
+    }
+
+    public void mostrarFunciones() {
+        mostrar(new PantallaFunciones(this).crearVista());
+    }
+
+    public void mostrarRegistroFuncion() {
+        mostrar(new PantallaFormularioFuncion(this).crearVista());
+    }
+
+    // Los servicios no tienen búsqueda por id de películas y salas; se recorre el listado
+    // completo. Devuelven null si no existe.
+    public Pelicula buscarPelicula(int idPelicula) {
+        for (Pelicula pelicula : peliculaService.listar()) {
+            if (pelicula.getId() == idPelicula) {
+                return pelicula;
+            }
+        }
+        return null;
+    }
+
+    public Sala buscarSala(int idSala) {
+        for (Sala sala : salaService.listar()) {
+            if (sala.getId() == idSala) {
+                return sala;
+            }
+        }
+        return null;
+    }
+
+    // Una línea por función con fecha, hora, el nombre de la sala o el título de la película
+    // y la cantidad de reservas confirmadas que se cancelarían con ella.
+    public String describirFuncionesAfectadas(List<Funcion> funciones, boolean nombrarPelicula) {
+        StringBuilder texto = new StringBuilder();
+        for (Funcion funcion : funciones) {
+            String nombre;
+            if (nombrarPelicula) {
+                nombre = funcion.getPelicula().getTitulo();
+            } else {
+                nombre = funcion.getSala().getNombre();
+            }
+            texto.append("• ").append(Formato.fechaHora(funcion.getInicio())).append(" · ").append(nombre)
+                    .append(" · ").append(Formato.reservasConfirmadas(funcionService.cantidadReservasConfirmadas(funcion)))
+                    .append("\n");
+        }
+        return texto.toString();
+    }
+
     // La función se vuelve a consultar cada vez porque el estado pudo recargarse
     // después de un error al guardar. Si ya no se puede reservar, se informa y se vuelve
     // a la cartelera; la validación definitiva la hace el servicio al confirmar.
@@ -122,7 +210,12 @@ public class VentanaPrincipal {
     private void mostrar(Node pantalla) {
         ScrollPane desplazable = new ScrollPane(pantalla);
         desplazable.setFitToWidth(true);
+        // Sin esto el panel dibuja un marco de foco alrededor de toda la pantalla al hacer clic en ella.
+        desplazable.setStyle("-fx-background-color: transparent;");
         raiz.setCenter(desplazable);
+        // Al cambiar de pantalla el foco pasaba al primer botón del menú y parecía que
+        // la sección elegida era "Cartelera"; se lo deja en la pantalla que se acaba de mostrar.
+        desplazable.requestFocus();
     }
 
     private Node crearEncabezado() {
@@ -141,11 +234,11 @@ public class VentanaPrincipal {
         Button reservas = crearOpcionMenu("Reservas");
         reservas.setDisable(true);
         Button peliculas = crearOpcionMenu("Películas");
-        peliculas.setDisable(true);
+        peliculas.setOnAction(e -> mostrarPeliculas());
         Button salas = crearOpcionMenu("Salas");
-        salas.setDisable(true);
+        salas.setOnAction(e -> mostrarSalas());
         Button funciones = crearOpcionMenu("Funciones");
-        funciones.setDisable(true);
+        funciones.setOnAction(e -> mostrarFunciones());
 
         VBox menu = new VBox(8, cartelera, reservas, peliculas, salas, funciones);
         menu.setPadding(new Insets(16));

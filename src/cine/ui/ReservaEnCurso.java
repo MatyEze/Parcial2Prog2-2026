@@ -18,16 +18,27 @@ public class ReservaEnCurso {
     private Map<String, TipoEntrada> tiposPorButaca;
     private String nombre;
     private String identificacion;
+    // Indica desde qué listado se abrió la selección de butacas, para volver al mismo lugar.
+    private boolean abiertaDesdeFunciones;
 
     public ReservaEnCurso(int idFuncion) {
         this.idFuncion = idFuncion;
         this.tiposPorButaca = new LinkedHashMap<>();
         this.nombre = "";
         this.identificacion = "";
+        this.abiertaDesdeFunciones = false;
     }
 
     public int getIdFuncion() {
         return idFuncion;
+    }
+
+    public void marcarAbiertaDesdeFunciones() {
+        this.abiertaDesdeFunciones = true;
+    }
+
+    public boolean isAbiertaDesdeFunciones() {
+        return abiertaDesdeFunciones;
     }
 
     public void seleccionar(String codigo) {

@@ -7,6 +7,7 @@ import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
 public class Componentes {
@@ -40,6 +41,35 @@ public class Componentes {
         Button boton = new Button(texto);
         boton.setStyle("-fx-font-weight: bold;");
         return boton;
+    }
+
+    // Franja que indica dónde está la pantalla del cine sobre la grilla de butacas.
+    public static Label indicadorPantalla() {
+        Label pantallaCine = new Label("PANTALLA");
+        pantallaCine.setMaxWidth(Double.MAX_VALUE);
+        pantallaCine.setAlignment(Pos.CENTER);
+        pantallaCine.setStyle("-fx-background-color: #dddddd; -fx-padding: 4; -fx-font-weight: bold;");
+        return pantallaCine;
+    }
+
+    public static HBox filaBotones(Node... botones) {
+        HBox fila = new HBox(10, botones);
+        fila.setAlignment(Pos.CENTER_LEFT);
+        return fila;
+    }
+
+    // Formulario de dos columnas: etiqueta a la izquierda y campo a la derecha.
+    public static GridPane formulario() {
+        GridPane formulario = new GridPane();
+        formulario.setHgap(10);
+        formulario.setVgap(8);
+        return formulario;
+    }
+
+    public static void agregarCampo(GridPane formulario, String etiqueta, Node campo) {
+        int fila = formulario.getRowCount();
+        formulario.add(new Label(etiqueta), 0, fila);
+        formulario.add(campo, 1, fila);
     }
 
     // Contenedor común de las pantallas: columna con margen y separación entre elementos.
