@@ -10,9 +10,9 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 
@@ -48,10 +48,10 @@ public class PantallaSeleccionButacas {
 
         VBox sala = new VBox(14, Componentes.indicadorPantalla(), crearGrilla(funcion, ocupadas), crearLeyenda());
 
-        BorderPane contenido = new BorderPane();
-        contenido.setCenter(sala);
-        contenido.setRight(crearResumen(funcion));
-        BorderPane.setMargin(contenido.getRight(), new Insets(0, 0, 0, 24));
+        // Se usa una fila porque calcula su alto con el ancho real del resumen; con otro
+        // contenedor los textos del resumen que ocupan dos líneas quedaban cortados en salas chicas.
+        HBox contenido = new HBox(24, sala, crearResumen(funcion));
+        HBox.setHgrow(sala, Priority.ALWAYS);
 
         Button volver = new Button("← Volver");
         volver.setOnAction(e -> volver());
