@@ -72,6 +72,9 @@ public class FuncionService {
         if (estado == EstadoFuncion.CANCELADA) {
             throw new ReglaNegocioException("La función está cancelada y no se puede cambiar el precio.");
         }
+        if (estado == EstadoFuncion.EN_EMISION) {
+            throw new ReglaNegocioException("La función está en emisión y no se puede cambiar el precio.");
+        }
         if (estado == EstadoFuncion.FINALIZADA) {
             throw new ReglaNegocioException("La función ya finalizó y no se puede cambiar el precio.");
         }

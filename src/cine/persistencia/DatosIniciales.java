@@ -15,8 +15,9 @@ import java.util.List;
 public class DatosIniciales {
 
     // Los objetos se crean directamente y no con los servicios, porque los servicios
-    // guardan después de cada operación. Las fechas se calculan a partir de hoy
-    // para que las funciones de demostración siempre sean futuras.
+    // guardan después de cada operación y no permiten programar funciones pasadas.
+    // Las fechas se calculan a partir de hoy para que el estado de cada función de
+    // demostración sea siempre el mismo en el primer inicio.
     public static EstadoCine crearEstadoDemo() {
         EstadoCine estado = new EstadoCine();
 
@@ -55,6 +56,25 @@ public class DatosIniciales {
         entradasAna.add(crearEntrada(orbitaTemprano, TipoEntrada.ESTUDIANTE, 'C', 5));
         Reserva reservaAna = agregarReserva(estado, ana, orbitaTemprano, entradasAna);
         reservaAna.cancelar();
+
+        // Una función de ayer, ya finalizada, y otra que empezó hace 20 minutos, para que al
+        // abrir el programa por primera vez esté en emisión. Esta pasa sola a finalizada
+        // cuando termina la película (dos horas después de su inicio). Están en salas
+        // distintas y lejos de las funciones de mañana, así que no se superponen con nada.
+        LocalDateTime ahora = LocalDateTime.now().withSecond(0).withNano(0);
+        Funcion ultimoViajeAyer = agregarFuncion(estado, ultimoViaje, sala2,
+                LocalDate.now().minusDays(1).atTime(20, 0), 4500);
+        Funcion orbitaEnEmision = agregarFuncion(estado, orbita, sala1, ahora.minusMinutes(20), 5000);
+
+        List<Entrada> entradasMartinAyer = new ArrayList<>();
+        entradasMartinAyer.add(crearEntrada(ultimoViajeAyer, TipoEntrada.GENERAL, 'B', 2));
+        agregarReserva(estado, martin, ultimoViajeAyer, entradasMartinAyer);
+
+        Cliente diego = agregarCliente(estado, "32904517", "Diego Fernández");
+        List<Entrada> entradasDiego = new ArrayList<>();
+        entradasDiego.add(crearEntrada(orbitaEnEmision, TipoEntrada.GENERAL, 'D', 1));
+        entradasDiego.add(crearEntrada(orbitaEnEmision, TipoEntrada.GENERAL, 'D', 2));
+        agregarReserva(estado, diego, orbitaEnEmision, entradasDiego);
 
         return estado;
     }

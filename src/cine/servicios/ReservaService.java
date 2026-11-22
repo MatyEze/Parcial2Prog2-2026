@@ -5,6 +5,7 @@ import cine.excepciones.ReglaNegocioException;
 import cine.modelo.Butaca;
 import cine.modelo.Cliente;
 import cine.modelo.Entrada;
+import cine.modelo.EstadoFuncion;
 import cine.modelo.Funcion;
 import cine.modelo.Reserva;
 import cine.modelo.TipoEntrada;
@@ -90,6 +91,16 @@ public class ReservaService {
         }
         if (!reserva.estaConfirmada()) {
             throw new ReglaNegocioException("La reserva " + reserva.getId() + " ya está cancelada.");
+        }
+        EstadoFuncion estadoFuncion = reserva.getFuncion().getEstado(LocalDateTime.now());
+        if (estadoFuncion == EstadoFuncion.EN_EMISION) {
+            throw new ReglaNegocioException("La función está en emisión y la reserva " + reserva.getId()
+                    + " no se puede cancelar por separado. Solo se puede cancelar la función completa,"
+                    + " junto con todas sus reservas.");
+        }
+        if (estadoFuncion == EstadoFuncion.FINALIZADA) {
+            throw new ReglaNegocioException("La función ya finalizó y la reserva " + reserva.getId()
+                    + " no se puede cancelar. Queda confirmada en el historial.");
         }
         reserva.cancelar();
         gestor.guardarCambios();

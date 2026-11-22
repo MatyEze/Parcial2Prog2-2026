@@ -57,12 +57,18 @@ public class PantallaFunciones {
         listado.getChildren().add(tabla);
     }
 
-    // Solo las funciones vigentes tienen acciones; las demás ya no se pueden modificar.
+    // Una función en emisión solo se puede cancelar; las finalizadas y canceladas no tienen acciones.
     private Node crearAcciones(Funcion funcion, LocalDateTime ahora) {
-        if (funcion.getEstado(ahora) != EstadoFuncion.VIGENTE) {
+        EstadoFuncion estado = funcion.getEstado(ahora);
+        int idFuncion = funcion.getId();
+        if (estado == EstadoFuncion.EN_EMISION) {
+            Button cancelar = new Button("Cancelar función");
+            cancelar.setOnAction(e -> cancelar(idFuncion));
+            return Componentes.filaBotones(cancelar);
+        }
+        if (estado != EstadoFuncion.VIGENTE) {
             return new Label("");
         }
-        int idFuncion = funcion.getId();
         Button verButacas = new Button("Ver butacas →");
         verButacas.setOnAction(e -> verButacas(idFuncion));
         Button cambiarPrecio = new Button("Cambiar precio");
@@ -131,6 +137,9 @@ public class PantallaFunciones {
         } else {
             mensaje = "La función tiene " + reservas + " reservas confirmadas que también se van a cancelar.\n\n"
                     + "La cancelación es definitiva: la función y las reservas canceladas no se recuperan.";
+        }
+        if (funcion.getEstado(LocalDateTime.now()) == EstadoFuncion.EN_EMISION) {
+            mensaje = "La función está en emisión en este momento.\n\n" + mensaje;
         }
         boolean aceptado = Dialogos.confirmar("¿Cancelar la función de " + funcion.getPelicula().getTitulo()
                 + " · " + Formato.funcion(funcion) + "?", mensaje, "Sí, cancelar función", "Conservar función");

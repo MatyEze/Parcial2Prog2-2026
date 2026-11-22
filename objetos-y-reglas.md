@@ -52,8 +52,10 @@ El recorrido: tenemos una película, la programamos en una sala, alguien elige u
 
 - Una función necesita una película y una sala que existan.
 - En una misma sala no puede haber dos funciones superpuestas. La hora de fin es la hora de inicio más la duración de la película.
-- Una función está vigente, finalizada (no se canceló y su hora de inicio ya pasó) o cancelada.
-- A una función finalizada o cancelada no se le puede cambiar el precio ni se la puede cancelar. Las reservas de una función finalizada sí se pueden cancelar.
+- Una función está vigente (todavía no empezó), en emisión (ya empezó y la película todavía no terminó), finalizada (la película ya terminó) o cancelada. El estado no se guarda: se calcula con la hora actual, y cancelada tiene prioridad sobre los demás.
+- Solo a una función vigente se le puede cambiar el precio.
+- Una función vigente o en emisión se puede cancelar, y con ella se cancelan sus reservas confirmadas. Una función finalizada o cancelada no se puede cancelar.
+- Una reserva se puede cancelar por separado solo mientras su función está vigente. Si la función está en emisión o finalizada, la reserva ya no se cancela sola.
 
 ### Reservas
 

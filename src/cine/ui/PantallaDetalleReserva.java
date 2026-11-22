@@ -4,6 +4,7 @@ import cine.excepciones.PersistenciaException;
 import cine.excepciones.ReglaNegocioException;
 import cine.modelo.Butaca;
 import cine.modelo.Entrada;
+import cine.modelo.EstadoFuncion;
 import cine.modelo.Funcion;
 import cine.modelo.Reserva;
 import java.time.LocalDateTime;
@@ -37,12 +38,19 @@ public class PantallaDetalleReserva {
         Button volver = new Button("← Volver a reservas");
         volver.setOnAction(e -> ventana.mostrarReservas());
         HBox botones = Componentes.filaBotones(volver);
-        // Una reserva confirmada se puede cancelar aunque su función ya haya comenzado;
-        // en ese caso el cuadro de confirmación lo advierte.
+        Label aviso = null;
         if (reserva.estaConfirmada()) {
-            Button cancelar = new Button("Cancelar reserva");
-            cancelar.setOnAction(e -> cancelar());
-            botones.getChildren().add(0, cancelar);
+            EstadoFuncion estadoFuncion = funcion.getEstado(LocalDateTime.now());
+            if (estadoFuncion == EstadoFuncion.VIGENTE) {
+                Button cancelar = new Button("Cancelar reserva");
+                cancelar.setOnAction(e -> cancelar());
+                botones.getChildren().add(0, cancelar);
+            } else if (estadoFuncion == EstadoFuncion.EN_EMISION) {
+                aviso = Componentes.nota("La función está en emisión: la reserva no se puede cancelar "
+                        + "por separado, solo cancelando la función completa.");
+            } else if (estadoFuncion == EstadoFuncion.FINALIZADA) {
+                aviso = Componentes.nota("La función ya finalizó: la reserva no se puede cancelar.");
+            }
         }
 
         VBox pantalla = Componentes.pantalla();
@@ -53,8 +61,11 @@ public class PantallaDetalleReserva {
                 new Label("Película: " + funcion.getPelicula().getTitulo()),
                 new Label("Función: " + Formato.funcion(funcion)),
                 entradas,
-                Componentes.resaltado("Importe confirmado: " + Formato.dinero(reserva.getImporteTotal())),
-                botones);
+                Componentes.resaltado("Importe confirmado: " + Formato.dinero(reserva.getImporteTotal())));
+        if (aviso != null) {
+            pantalla.getChildren().add(aviso);
+        }
+        pantalla.getChildren().add(botones);
         return pantalla;
     }
 
@@ -65,9 +76,6 @@ public class PantallaDetalleReserva {
             return;
         }
         String mensaje = describirLiberacion(reserva.getButacas()) + " La reserva quedará en el historial.";
-        if (reserva.getFuncion().yaComenzo(LocalDateTime.now())) {
-            mensaje = "Atención: la función ya comenzó.\n\n" + mensaje;
-        }
         boolean aceptado = Dialogos.confirmar("¿Cancelar la reserva " + codigo + "?", mensaje,
                 "Sí, cancelar", "Conservar reserva");
         if (!aceptado) {

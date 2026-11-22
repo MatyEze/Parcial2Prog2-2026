@@ -118,6 +118,8 @@ public class Formato {
         switch (estado) {
             case VIGENTE:
                 return "Vigente";
+            case EN_EMISION:
+                return "En emisión";
             case FINALIZADA:
                 return "Finalizada";
             case CANCELADA:

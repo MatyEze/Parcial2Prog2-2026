@@ -53,14 +53,18 @@ public class Funcion implements Identificable<Integer>, Serializable {
     }
 
     // El estado se calcula en cada consulta y no se guarda, porque depende de la hora actual.
+    // La función termina con la película; el margen de limpieza no cuenta.
     public EstadoFuncion getEstado(LocalDateTime ahora) {
         if (cancelada) {
             return EstadoFuncion.CANCELADA;
         }
-        if (yaComenzo(ahora)) {
-            return EstadoFuncion.FINALIZADA;
+        if (!yaComenzo(ahora)) {
+            return EstadoFuncion.VIGENTE;
         }
-        return EstadoFuncion.VIGENTE;
+        if (ahora.isBefore(getFin())) {
+            return EstadoFuncion.EN_EMISION;
+        }
+        return EstadoFuncion.FINALIZADA;
     }
 
     public boolean estaVigente(LocalDateTime ahora) {

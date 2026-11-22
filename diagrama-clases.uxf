@@ -233,10 +233,11 @@ ESTUDIANTE</panel_attributes><additional_attributes></additional_attributes></el
 EstadoReserva
 --
 CONFIRMADA
-CANCELADA</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>250</x><y>1270</y><w>160</w><h>120</h></coordinates><panel_attributes>&lt;&lt;enumeration&gt;&gt;
+CANCELADA</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>250</x><y>1270</y><w>160</w><h>140</h></coordinates><panel_attributes>&lt;&lt;enumeration&gt;&gt;
 EstadoFuncion
 --
 VIGENTE
+EN_EMISION
 FINALIZADA
 CANCELADA</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1000</x><y>1750</y><w>230</w><h>100</h></coordinates><panel_attributes>EntradaGeneral
 --
