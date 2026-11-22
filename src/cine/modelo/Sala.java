@@ -80,6 +80,14 @@ public class Sala implements Identificable<Integer>, Serializable {
         return nombre;
     }
 
+    public int getFilas() {
+        return filas;
+    }
+
+    public int getButacasPorFila() {
+        return butacasPorFila;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

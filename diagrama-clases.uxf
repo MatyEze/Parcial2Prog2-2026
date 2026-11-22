@@ -148,7 +148,7 @@ _+MARGEN_MINUTOS: int = 15_
 +getInicio(): LocalDateTime
 +getPrecio(): double
 +equals(o: Object): boolean
-+hashCode(): int</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>900</x><y>910</y><w>320</w><h>390</h></coordinates><panel_attributes>Sala
++hashCode(): int</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>900</x><y>910</y><w>320</w><h>430</h></coordinates><panel_attributes>Sala
 --
 -id: int
 -nombre: String
@@ -168,6 +168,8 @@ _+MARGEN_MINUTOS: int = 15_
 +contiene(butaca: Butaca): boolean
 +getId(): Integer
 +getNombre(): String
++getFilas(): int
++getButacasPorFila(): int
 +equals(o: Object): boolean
 +hashCode(): int</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1340</x><y>910</y><w>240</w><h>200</h></coordinates><panel_attributes>Butaca
 --
