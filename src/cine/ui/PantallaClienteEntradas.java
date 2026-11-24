@@ -49,10 +49,11 @@ public class PantallaClienteEntradas {
         importes = new HashMap<>();
         GridPane tabla = Componentes.tabla("Butaca", "Tipo de entrada", "Importe");
         for (String codigo : reserva.getCodigos()) {
+            Butaca butaca = buscarButaca(funcion, codigo);
             ComboBox<String> tipo = new ComboBox<>();
             // Las opciones siguen el orden de TipoEntrada, así la posición elegida indica el tipo.
             for (TipoEntrada valor : TipoEntrada.values()) {
-                tipo.getItems().add(Formato.tipoEntrada(valor));
+                tipo.getItems().add(textoOpcion(valor, butaca, funcion));
             }
             tipo.getSelectionModel().select(reserva.getTipo(codigo).ordinal());
             tipo.setOnAction(e -> cambiarTipo(codigo, tipo, funcion));
@@ -77,10 +78,37 @@ public class PantallaClienteEntradas {
                 Componentes.subtitulo(funcion.getPelicula().getTitulo() + " · " + Formato.funcion(funcion)),
                 datos,
                 tabla,
-                Componentes.nota("Estudiante: descuento ilustrativo del 20 %."),
                 total,
                 botones);
         return pantalla;
+    }
+
+    // El porcentaje no se escribe en la pantalla: se calcula comparando el precio de la entrada
+    // con el de la función, así un tipo de entrada nuevo se muestra bien sin tocar esta clase.
+    private String textoOpcion(TipoEntrada tipo, Butaca butaca, Funcion funcion) {
+        String nombre = Formato.tipoEntrada(tipo);
+        double precioBase = funcion.getPrecio();
+        if (precioBase <= 0) {
+            return nombre;
+        }
+        double precio = Entrada.crear(tipo, butaca, precioBase).getPrecioConfirmado();
+        long porcentaje = Math.round((precioBase - precio) * 100 / precioBase);
+        if (porcentaje > 0) {
+            return nombre + " (" + porcentaje + " % de descuento)";
+        }
+        if (porcentaje < 0) {
+            return nombre + " (" + (-porcentaje) + " % de recargo)";
+        }
+        return nombre;
+    }
+
+    private Butaca buscarButaca(Funcion funcion, String codigo) {
+        for (Butaca butaca : funcion.getSala().getButacas()) {
+            if (butaca.getCodigo().equals(codigo)) {
+                return butaca;
+            }
+        }
+        return null;
     }
 
     private void cambiarTipo(String codigo, ComboBox<String> tipo, Funcion funcion) {
