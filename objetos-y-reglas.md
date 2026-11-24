@@ -48,6 +48,11 @@ El recorrido: tenemos una película, la programamos en una sala, alguien elige u
 
 ## Reglas de negocio
 
+### Películas
+
+- Dos películas activas no pueden tener el mismo título. No importan las mayúsculas ni los espacios al principio o al final; los acentos sí. Las películas desactivadas pueden repetir títulos, y para activar una tiene que tener un título que no use otra activa.
+- El título y la duración no se cambian mientras la película tenga funciones futuras vigentes. Si esas funciones se cancelan, se pueden modificar.
+
 ### Funciones
 
 - Una función necesita una película y una sala que existan.
