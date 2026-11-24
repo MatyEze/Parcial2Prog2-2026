@@ -100,8 +100,8 @@ public class PeliculaService {
         Pelicula otra = buscarOtraActivaConTitulo(pelicula.getTitulo(), pelicula);
         if (otra != null) {
             throw new ReglaNegocioException("No se puede activar la película porque ya existe otra película "
-                    + "activa llamada \"" + otra.getTitulo() + "\". Si se cambia el título de esta película "
-                    + "o se desactiva la otra, se puede activar.");
+                    + "activa llamada \"" + otra.getTitulo() + "\". Si se le cambia el título a la película activa "
+                    + "o se la desactiva, esta se puede activar.");
         }
         pelicula.activar();
         gestor.guardarCambios();
